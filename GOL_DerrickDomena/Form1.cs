@@ -181,7 +181,6 @@ namespace GOL_DerrickDomena
         }
 
         //Events
-
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
