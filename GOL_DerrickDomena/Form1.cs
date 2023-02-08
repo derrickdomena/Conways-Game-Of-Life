@@ -48,7 +48,8 @@ namespace GOL_DerrickDomena
                 {
                     //Neighbor count
                     int count = CountNeighborsFinite(x, y);
-                    
+                    //int count = CountNeighborsToroidal(x, y);
+
                     //Rules
                     // Checks living cells
                     if (universe[x, y] == true)
