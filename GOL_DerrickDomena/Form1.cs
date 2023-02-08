@@ -57,7 +57,7 @@ namespace GOL_DerrickDomena
                         count -= 1;
                         //a. Living cells with less than 2 living neighbors die in the next generation.
                         //b. Living cells with more than 3 living neighbors die in the next generation.
-                        if (count < 2 && count > 3)
+                        if (count < 2 || count > 3)
                         {
                             scratchPad[x, y] = false;
                         }
@@ -69,9 +69,17 @@ namespace GOL_DerrickDomena
                     }
                     //Checks dead cells
                     //d. Dead cells with exactly 3 living neighbors live in the next generation.
-                    else if (universe[x, y] == false && count == 3)
-                    {
-                        scratchPad[x, y] = true;
+                    else if (universe[x, y] == false)
+                    { 
+                        if (count == 3)
+                        {
+                            scratchPad[x, y] = true;
+                        }
+                        // Sets positio
+                        else if (count != 3)
+                        {
+                            scratchPad[x, y] = false;
+                        }                      
                     }             
                 }
             }
@@ -82,7 +90,7 @@ namespace GOL_DerrickDomena
             scratchPad = temp;
 
             // Clears the scratchPad previous values
-            Array.Clear(scratchPad, 0, scratchPad.Length);
+            //Array.Clear(scratchPad, 0, scratchPad.Length);
 
             // Increment generation count
             generations++;
@@ -243,7 +251,7 @@ namespace GOL_DerrickDomena
                             {                               
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
-                            else if (neighbors == 1)
+                            else if (neighbors == 1 || neighbors > 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
@@ -254,7 +262,7 @@ namespace GOL_DerrickDomena
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
-                            else if (neighbors == 1 || neighbors == 2 || neighbors > 3)
+                            else if (neighbors != 0 && neighbors != 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
