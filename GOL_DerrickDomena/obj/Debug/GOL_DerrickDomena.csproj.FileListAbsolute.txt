@@ -1,0 +1,11 @@
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\bin\Debug\GOL_DerrickDomena.exe.config
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\bin\Debug\GOL_DerrickDomena.exe
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\bin\Debug\GOL_DerrickDomena.pdb
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.csproj.AssemblyReference.cache
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.csproj.SuggestedBindingRedirects.cache
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.Form1.resources
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.Properties.Resources.resources
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.csproj.GenerateResource.cache
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.csproj.CoreCompileInputs.cache
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.exe
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.pdb
