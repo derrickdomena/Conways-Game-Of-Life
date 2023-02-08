@@ -7,9 +7,9 @@ namespace GOL_DerrickDomena
     public partial class Form1 : Form
     {
         // The universe array
-        bool[,] universe = new bool[30, 30];
+        bool[,] universe = new bool[20, 20];
         // The scratchPad array
-        bool[,] scratchPad = new bool[30, 30];      
+        bool[,] scratchPad = new bool[20, 20];      
 
         // Drawing colors
         Color gridColor = Color.Black;
