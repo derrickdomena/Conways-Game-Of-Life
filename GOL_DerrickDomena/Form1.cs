@@ -75,7 +75,7 @@ namespace GOL_DerrickDomena
                         {
                             scratchPad[x, y] = true;
                         }
-                        // Sets positio
+                        // Sets position to false if neighbors not equal to 3
                         else if (count != 3)
                         {
                             scratchPad[x, y] = false;
@@ -88,9 +88,6 @@ namespace GOL_DerrickDomena
             bool[,] temp = universe;
             universe = scratchPad;
             scratchPad = temp;
-
-            // Clears the scratchPad previous values
-            //Array.Clear(scratchPad, 0, scratchPad.Length);
 
             // Increment generation count
             generations++;
