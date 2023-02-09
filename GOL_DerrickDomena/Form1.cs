@@ -60,12 +60,12 @@ namespace GOL_DerrickDomena
                         //b. Living cells with more than 3 living neighbors die in the next generation.
                         if (count < 2 || count > 3)
                         {
-                            scratchPad[x, y] = false;
+                            scratchPad[x, y] = false;                          
                         }
                         //c. Living cells with 2 or 3 living neighbors live in the next generation.
                         else if (count == 2 || count == 3)
                         {
-                            scratchPad[x, y] = true;
+                            scratchPad[x, y] = true;                            
                         }                    
                     }
                     //Checks dead cells
@@ -74,14 +74,14 @@ namespace GOL_DerrickDomena
                     { 
                         if (count == 3)
                         {
-                            scratchPad[x, y] = true;
+                            scratchPad[x, y] = true;                            
                         }
                         // Sets position to false if neighbors not equal to 3
                         else if (count != 3)
                         {
-                            scratchPad[x, y] = false;
+                            scratchPad[x, y] = false;                           
                         }                      
-                    }             
+                    }                    
                 }
             }
             
@@ -320,6 +320,7 @@ namespace GOL_DerrickDomena
                 }
 
                 // Update status strip alive
+                // Still needs work, I need to find a way to track alive cells when cells die or get re-born.
                 toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString();
 
                 // Tell Windows you need to repaint
@@ -356,6 +357,15 @@ namespace GOL_DerrickDomena
             NextGeneration();
         }
 
+        //To
+        //Skips to the specified generation
+        private void toToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToDialogBox toDialogBox = new ToDialogBox();
+
+            toDialogBox.ShowDialog();
+        }
+
         //New
         //Resets the universe and objects
         private void newToolStripButton_Click(object sender, EventArgs e)
@@ -377,7 +387,8 @@ namespace GOL_DerrickDomena
             graphicsPanel1.Invalidate();
         }
 
-        //View - Neighbor Count
+        //View
+        //Neighbor Count
         //Turns on and off the view for the Neighbor Count
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -392,7 +403,7 @@ namespace GOL_DerrickDomena
             graphicsPanel1.Invalidate();
         }
 
-        //View - Grid
+        //Grid
         //Turns on and off the view of the grid
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -406,5 +417,49 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+
+        //Color
+        //Color - Back Color
+        private void backColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ColorDialog backColorTool = new ColorDialog();
+
+            backColorTool.Color = graphicsPanel1.BackColor;
+
+            if (DialogResult.OK == backColorTool.ShowDialog())
+            {
+                graphicsPanel1.BackColor = backColorTool.Color;
+            }         
+        }
+
+        //Color - Cell Color
+        private void cellColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ColorDialog cellColorTool = new ColorDialog();
+
+            cellColorTool.Color = cellColor;
+
+            if (DialogResult.OK == cellColorTool.ShowDialog())
+            {
+                cellColor = cellColorTool.Color;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        //Color - Grid Color
+        private void gridColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ColorDialog gridColorTool = new ColorDialog();
+
+            gridColorTool.Color = gridColor;
+
+            if (DialogResult.OK == gridColorTool.ShowDialog())
+            {
+                gridColor = gridColorTool.Color;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        
     }
 }

@@ -9,3 +9,4 @@ C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\G
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.csproj.CoreCompileInputs.cache
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.exe
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.pdb
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.ToDialogBox.resources
