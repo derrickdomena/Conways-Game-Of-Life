@@ -19,8 +19,9 @@ namespace GOL_DerrickDomena
         // The Timer class
         Timer timer = new Timer();
 
-        // Keeps track of the generation count
+        // Keeps track of the generation count and alive count
         int generations = 0;
+        int alive = 0;
 
         // Keeps track if the viewNeighborCount tool strip button was clicked.
         // Default is true, to enable viewing always just in case button is never clicked.
@@ -140,10 +141,12 @@ namespace GOL_DerrickDomena
                     if (universe[xCheck, yCheck] == true) count++;
                 }
             }
+            // Avoid repeating code from removing 1 from neighbors in graphicsPanel1 and count from NextGeneration if cell is alive in universe.
             if (universe[x, y] == true)
             {
                 count--;
             }
+            
             return count;
         }
 
@@ -243,10 +246,11 @@ namespace GOL_DerrickDomena
                     if (viewNeighborCountClicked)
                     {
                         int neighbors = CountNeighborsFinite(x, y);
+                        
 
                         // Fill the cell with the number of neighbors and sets their colors
                         if (universe[x, y] == true)
-                        {                          
+                        {                           
                             if (neighbors == 2 || neighbors == 3)
                             {                           
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
@@ -258,7 +262,7 @@ namespace GOL_DerrickDomena
                             }
                         }
                         else if (universe[x, y] == false && neighbors != 0)
-                        {
+                        {                          
                             if (neighbors == 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
@@ -275,9 +279,11 @@ namespace GOL_DerrickDomena
                     {                   
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    }
+                    }             
                 }
             }
+
+            
 
             // Cleaning up pens and brushes
             gridPen.Dispose();
@@ -301,6 +307,20 @@ namespace GOL_DerrickDomena
 
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
+
+                // Track alive cells
+                // Increment alive count
+                if (universe[x, y])
+                {
+                    alive++;
+                }
+                else
+                {
+                    alive--;
+                }
+
+                // Update status strip alive
+                toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString();
 
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
@@ -337,9 +357,16 @@ namespace GOL_DerrickDomena
         }
 
         //New
-        //Empties the Universe
+        //Resets the universe and objects
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
+            // Reset the generation count and alive count
+            generations = 0;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            alive = 0;
+            toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString();
+
+            // Reset the universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
