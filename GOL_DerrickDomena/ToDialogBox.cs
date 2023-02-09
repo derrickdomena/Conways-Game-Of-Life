@@ -16,5 +16,15 @@ namespace GOL_DerrickDomena
         {
             InitializeComponent();
         }
+
+        public int GetNumber()
+        {
+            return (int)numericUpDownNumber.Value;
+        }
+
+        public void SetNumber(int number)
+        {
+            numericUpDownNumber.Value = number;
+        }
     }
 }

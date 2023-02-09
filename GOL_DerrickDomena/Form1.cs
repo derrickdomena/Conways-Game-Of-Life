@@ -8,9 +8,9 @@ namespace GOL_DerrickDomena
     public partial class Form1 : Form
     {
         // The universe array
-        bool[,] universe = new bool[20, 20];
+        bool[,] universe = new bool[30, 30];
         // The scratchPad array
-        bool[,] scratchPad = new bool[20, 20];      
+        bool[,] scratchPad = new bool[30, 30];      
 
         // Drawing colors
         Color gridColor = Color.Gray;
@@ -363,7 +363,21 @@ namespace GOL_DerrickDomena
         {
             ToDialogBox toDialogBox = new ToDialogBox();
 
-            toDialogBox.ShowDialog();
+            int nextGenerationNumber = 0;
+            toDialogBox.SetNumber(nextGenerationNumber);
+
+            if (DialogResult.OK == toDialogBox.ShowDialog())
+            {
+                nextGenerationNumber = toDialogBox.GetNumber();
+
+                for (int i = 0; i < nextGenerationNumber; i++)
+                {
+                    
+                    NextGeneration();
+                    
+                }
+            }
+            
         }
 
         //New
