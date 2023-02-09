@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace GOL_DerrickDomena
 {
@@ -12,7 +13,7 @@ namespace GOL_DerrickDomena
         bool[,] scratchPad = new bool[20, 20];      
 
         // Drawing colors
-        Color gridColor = Color.Black;
+        Color gridColor = Color.Gray;
         Color cellColor = Color.LightGray;
 
         // The Timer class
@@ -53,8 +54,7 @@ namespace GOL_DerrickDomena
                     //Rules
                     // Checks living cells
                     if (universe[x, y] == true)
-                    {                    
-                        count -= 1;
+                    {                                          
                         //a. Living cells with less than 2 living neighbors die in the next generation.
                         //b. Living cells with more than 3 living neighbors die in the next generation.
                         if (count < 2 || count > 3)
@@ -139,6 +139,10 @@ namespace GOL_DerrickDomena
 
                     if (universe[xCheck, yCheck] == true) count++;
                 }
+            }
+            if (universe[x, y] == true)
+            {
+                count--;
             }
             return count;
         }
@@ -242,24 +246,24 @@ namespace GOL_DerrickDomena
 
                         // Fill the cell with the number of neighbors and sets their colors
                         if (universe[x, y] == true)
-                        {                    
-                            neighbors -= 1;                        
+                        {                          
                             if (neighbors == 2 || neighbors == 3)
-                            {                               
+                            {                           
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
                             else if (neighbors == 1 || neighbors > 3)
                             {
+                                
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
                         }
-                        else if (universe[x, y] == false)
+                        else if (universe[x, y] == false && neighbors != 0)
                         {
                             if (neighbors == 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
-                            else if (neighbors != 0 && neighbors != 3)
+                            else if (neighbors != 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
@@ -268,7 +272,7 @@ namespace GOL_DerrickDomena
 
                     // if statement that checks if viewGrid is true.
                     if (viewGridClicked)
-                    {
+                    {                   
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                     }
@@ -375,6 +379,5 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
-
     }
 }
