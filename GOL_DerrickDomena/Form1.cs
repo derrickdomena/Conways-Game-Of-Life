@@ -354,7 +354,7 @@ namespace GOL_DerrickDomena
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             //Calls next generation once
-            NextGeneration();
+            NextGeneration();           
         }
 
         //To
@@ -363,7 +363,7 @@ namespace GOL_DerrickDomena
         {
             ToDialogBox toDialogBox = new ToDialogBox();
 
-            int nextGenerationNumber = 0;
+            int nextGenerationNumber = generations + 1;
             toDialogBox.SetNumber(nextGenerationNumber);
 
             if (DialogResult.OK == toDialogBox.ShowDialog())
@@ -372,12 +372,9 @@ namespace GOL_DerrickDomena
 
                 for (int i = 0; i < nextGenerationNumber; i++)
                 {
-                    
                     NextGeneration();
-                    
-                }
-            }
-            
+                }              
+            }           
         }
 
         //New
