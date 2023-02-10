@@ -52,14 +52,17 @@ namespace GOL_DerrickDomena
 
         //Height
         #region Heigth of Universe in Cells
-        public int GetUniverseHeight()
+        // Property, gets and sets the value for UniverseHeight.
+        public int UniverseHeight
         {
-            return (int)numericUpDownHeightUniverse.Value;
-        }
-
-        public void SetUniverseHeight(int universeHeight)
-        {
-            numericUpDownHeightUniverse.Value = universeHeight;
+            get
+            {
+                return (int)numericUpDownHeightUniverse.Value;
+            }
+            set
+            {
+                numericUpDownHeightUniverse.Value = value;
+            }
         }
         #endregion
 
