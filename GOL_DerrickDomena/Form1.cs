@@ -485,14 +485,12 @@ namespace GOL_DerrickDomena
         private void toToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToDialogBox toDialogBox = new ToDialogBox();
-            // Sets the current generationCount + 1, since we can't go back a generation on GOL.
-            //toDialogBox.SetNumber(generationCount + 1);
+            // Sets the current generationCount + 1, since we can't go back a generation on GOL.          
             toDialogBox.Number = generationCount + 1;
 
             // Gets the generation from the numericUpDown and gives it to targetGeneration.
             if (DialogResult.OK == toDialogBox.ShowDialog())
-            {
-                //targetGeneration = toDialogBox.GetNumber();
+            {               
                 targetGeneration = toDialogBox.Number;
                 // Then sets the timer to true.
                 timer.Enabled = true;
@@ -557,14 +555,14 @@ namespace GOL_DerrickDomena
             OptionsDialogBox optionsDialogBox = new OptionsDialogBox();
 
             // Sets the time interval
-            optionsDialogBox.SetIntervalNum(timer.Interval);
+            optionsDialogBox.IntervalNum = timer.Interval;          
             // Sets the universe width
             optionsDialogBox.SetUniverseWidth(universeWidth);
             // Sets the universe height
             optionsDialogBox.SetUniverseHeight(universeHeight);
             if (DialogResult.OK == optionsDialogBox.ShowDialog())
             {
-                timer.Interval = optionsDialogBox.GetIntervalNum();
+                timer.Interval = optionsDialogBox.IntervalNum;
                 universeWidth = optionsDialogBox.GetUniverseWidth();
                 universeHeight = optionsDialogBox.GetUniverseHeight();
             }

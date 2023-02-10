@@ -19,16 +19,7 @@ namespace GOL_DerrickDomena
 
         // To Dialog Box
         #region Run to generation
-        //public int GetNumber()
-        //{
-        //    return (int)numericUpDownNumber.Value;
-        //}
-
-        //public void SetNumber(int number)
-        //{
-        //    numericUpDownNumber.Value = number;
-        //}
-
+        // Property, gets and sets the value for the Run to generation feature.
         public int Number
         {
             get 

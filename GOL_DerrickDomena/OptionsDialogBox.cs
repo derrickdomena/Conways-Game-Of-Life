@@ -28,6 +28,19 @@ namespace GOL_DerrickDomena
         {
             numericUpDownTimerInterval.Value = interval;
         }
+
+        public int IntervalNum
+        {
+            get
+            {
+                return (int)numericUpDownTimerInterval.Value;
+            }
+
+            set
+            {
+                numericUpDownTimerInterval.Value = value;
+            }
+        }
         #endregion
 
         //Width
