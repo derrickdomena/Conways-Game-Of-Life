@@ -259,7 +259,6 @@ namespace GOL_DerrickDomena
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
             {
-
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
@@ -270,13 +269,11 @@ namespace GOL_DerrickDomena
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
-                    Font font = new Font("Arial", 8f);
-                    
+                    // Font and stringFormat for dead cells and alive cells.
+                    Font font = new Font("Arial", 8f);                  
                     StringFormat stringFormat = new StringFormat();
                     stringFormat.Alignment = StringAlignment.Center;
                     stringFormat.LineAlignment = StringAlignment.Center;
-
-                   
 
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
@@ -284,6 +281,7 @@ namespace GOL_DerrickDomena
                         e.Graphics.FillRectangle(cellBrush, cellRect);
                     }
 
+                    // Change the method in which we draw live cells.
                     int neighbors = 0;
                     if (toroidalToolStripMenuItem1.Checked && !finiteToolStripMenuItem.Checked)
                     {
@@ -294,24 +292,25 @@ namespace GOL_DerrickDomena
                         neighbors = CountNeighborsFinite(x, y);
                     }
                     
-
                     // Neighbor Count
                     // if statement that checks if viewNeighborCount is true and that neighboars isn't equal to 0.
                     if (viewNeighborCountClicked && neighbors != 0)
                     {
-
-                        Brush brush = Brushes.Green;
+                        Brush viewNeighborbrush = Brushes.Green;
 
                         // Fill the cell with the number of neighbors and sets their colors
                         if (universe[x, y] == true && (neighbors == 1 || neighbors > 3))
                         {
-                            brush = Brushes.Red;
+                            viewNeighborbrush = Brushes.Red;
                         }
                         else if (universe[x, y] == false && neighbors != 3)
                         {
-                            brush = Brushes.Red;
+                            viewNeighborbrush = Brushes.Red;
                         }
-                        e.Graphics.DrawString(neighbors.ToString(), font, brush, cellRect, stringFormat);
+                        e.Graphics.DrawString(neighbors.ToString(), font, viewNeighborbrush, cellRect, stringFormat);
+
+                        // Cleaning up brushes
+                        viewNeighborbrush.Dispose();
                     }
 
                     // Grid
@@ -438,7 +437,6 @@ namespace GOL_DerrickDomena
             graphicsPanel1.Invalidate();
         }
         #endregion
-
 
         // Neighbor Count
         #region Show NeighborCount
