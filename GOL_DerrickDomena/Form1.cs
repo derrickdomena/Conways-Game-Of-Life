@@ -7,14 +7,16 @@ namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
     {
+        // Variable Definitions and Initializations.
+        #region Variable Definitions and Initializations
+
         //Static values for universe width and height
         private static int universeWidth = 30;
         private static int universeHeight = 30;
 
-        // The universe array
+        // The universe array and scratchPad array
         bool[,] universe = new bool[universeWidth, universeHeight];
-        // The scratchPad array
-        bool[,] scratchPad = new bool[universeWidth, universeHeight];      
+        bool[,] scratchPad = new bool[universeWidth, universeHeight];
 
         // Drawing colors
         Color gridColor = Color.Gray;
@@ -27,7 +29,7 @@ namespace GOL_DerrickDomena
         // Memberfield variables
         // Keeps track of generation and alive counts.
         int generationCount = 0;
-        int aliveCount = 0;        
+        int aliveCount = 0;
 
         // Status strip variables
         // Keeps track if the viewNeighborCount tool strip button was clicked.
@@ -38,19 +40,23 @@ namespace GOL_DerrickDomena
         // Default is true, to enable viewing always just in case button is never clicked.
         bool viewGridClicked = true;
 
+        // Keeps track of the generation that the user inputs for Run to generation.
         int targetGeneration = 0;
+        #endregion
 
+        // InitializeComponent and timer setup.
         public Form1()
         {
             InitializeComponent();
 
             // Setup the timer
             timer.Interval = 100; // milliseconds
-            timer.Tick += Timer_Tick;
-            //timer.Enabled = true; // start timer running
+            timer.Tick += Timer_Tick;      
         }
 
+        // Next Generation
         // Calculate the next generation of cells
+        #region NextGeneration
         private void NextGeneration()
         {
             // Sets alive count to 0 on NextGeneration call.
@@ -66,19 +72,19 @@ namespace GOL_DerrickDomena
                         count = CountNeighborsToroidal(x, y);
                     }
                     else if (!toroidalToolStripMenuItem1.Checked && finiteToolStripMenuItem.Checked)
-                    {                     
+                    {
                         count = CountNeighborsFinite(x, y);
-                    }                                
+                    }
 
                     //Rules
                     // Checks living cells
                     if (universe[x, y] == true)
-                    {                       
+                    {
                         //a. Living cells with less than 2 living neighbors die in the next generation.
                         //b. Living cells with more than 3 living neighbors die in the next generation.
                         if (count < 2 || count > 3)
                         {
-                            scratchPad[x, y] = false;                          
+                            scratchPad[x, y] = false;
                         }
                         //c. Living cells with 2 or 3 living neighbors live in the next generation.
                         else if (count == 2 || count == 3)
@@ -86,12 +92,12 @@ namespace GOL_DerrickDomena
                             scratchPad[x, y] = true;
                             // Increment alive count
                             aliveCount++;
-                        }                    
+                        }
                     }
                     //Checks dead cells
                     //d. Dead cells with exactly 3 living neighbors live in the next generation.
                     else if (universe[x, y] == false)
-                    {                      
+                    {
                         if (count == 3)
                         {
                             scratchPad[x, y] = true;
@@ -101,12 +107,12 @@ namespace GOL_DerrickDomena
                         // Sets position to false if neighbors not equal to 3
                         else if (count != 3)
                         {
-                            scratchPad[x, y] = false;                           
-                        }                      
-                    }                  
+                            scratchPad[x, y] = false;
+                        }
+                    }
                 }
             }
-            
+
             // Copy from scratchPad to universe
             bool[,] temp = universe;
             universe = scratchPad;
@@ -117,13 +123,14 @@ namespace GOL_DerrickDomena
 
             // Update status strip generationCount
             toolStripStatusLabelGenerations.Text = "Generations = " + generationCount.ToString();
-           
+
             // Update status strip aliveCount
             toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
 
             //Invalidate the graphics panel
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
         // Count Neighbors
         #region Count Neighbors
