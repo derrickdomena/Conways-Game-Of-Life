@@ -32,13 +32,18 @@ namespace GOL_DerrickDomena
         int aliveCount = 0;
 
         // Status strip variables
-        // Keeps track if the viewNeighborCount tool strip button was clicked.
+        #region StatusStrip Variables
         // Default is true, to enable viewing always just in case button is never clicked.
+        // Keeps track of toggleing the view for the NeighborCount tool strip button.    
         bool viewNeighborCountClicked = true;
 
-        // Keeps track if the viewGrid tool strip button was clicked.
-        // Default is true, to enable viewing always just in case button is never clicked.
+        // Keeps track of toggleing the view for the Grid tool strip button.
         bool viewGridClicked = true;
+
+        // Keeps track of toggleing the view for the HUD tool strip button.
+        bool viewHUDClicked = true;
+        string hudMode = "";
+        #endregion
 
         // Keeps track of the generation that the user inputs for Run to generation.
         int targetGeneration = 0;
@@ -266,10 +271,12 @@ namespace GOL_DerrickDomena
                     cellRect.Height = cellHeight;
 
                     Font font = new Font("Arial", 8f);
-
+                    
                     StringFormat stringFormat = new StringFormat();
                     stringFormat.Alignment = StringAlignment.Center;
                     stringFormat.LineAlignment = StringAlignment.Center;
+
+                   
 
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
@@ -286,7 +293,9 @@ namespace GOL_DerrickDomena
                     {
                         neighbors = CountNeighborsFinite(x, y);
                     }
+                    
 
+                    // Neighbor Count
                     // if statement that checks if viewNeighborCount is true and that neighboars isn't equal to 0.
                     if (viewNeighborCountClicked && neighbors != 0)
                     {
@@ -305,6 +314,7 @@ namespace GOL_DerrickDomena
                         e.Graphics.DrawString(neighbors.ToString(), font, brush, cellRect, stringFormat);
                     }
 
+                    // Grid
                     // if statement that checks if viewGrid is true.
                     if (viewGridClicked)
                     {
@@ -413,7 +423,24 @@ namespace GOL_DerrickDomena
         // View MenuStrip
         #region View MenuStrip
 
-        //Neighbor Count
+        // HUD
+        #region Show HUD
+        private void hudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (viewHUDClicked == true)
+            {
+                viewHUDClicked = false;
+            }
+            else
+            {
+                viewHUDClicked = true;
+            }
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+
+        // Neighbor Count
         #region Show NeighborCount
         //Turns on and off the view for the Neighbor Count
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -430,7 +457,7 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
-        //Grid
+        // Grid
         #region Show Grid
         //Turns on and off the view of the grid
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -457,7 +484,7 @@ namespace GOL_DerrickDomena
             {
                 toroidalToolStripMenuItem1.Checked = false;
                 finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
-            }
+            }           
         }
         #endregion
 
@@ -607,8 +634,10 @@ namespace GOL_DerrickDomena
             graphicsPanel1.Invalidate();
         }
 
+
         #endregion
 
         #endregion
+       
     }
 }
