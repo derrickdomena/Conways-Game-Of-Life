@@ -7,7 +7,7 @@ namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
     {
-        //Universe width and height
+        //Static values for universe width and height
         private static int universeWidth = 30;
         private static int universeHeight = 30;
 
