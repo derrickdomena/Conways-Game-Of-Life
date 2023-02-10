@@ -555,15 +555,15 @@ namespace GOL_DerrickDomena
             OptionsDialogBox optionsDialogBox = new OptionsDialogBox();
 
             // Sets the time interval
-            optionsDialogBox.IntervalNum = timer.Interval;          
+            optionsDialogBox.IntervalNum = timer.Interval;
             // Sets the universe width
-            optionsDialogBox.SetUniverseWidth(universeWidth);
+            optionsDialogBox.UniverseWidth = universeWidth;           
             // Sets the universe height
             optionsDialogBox.SetUniverseHeight(universeHeight);
             if (DialogResult.OK == optionsDialogBox.ShowDialog())
             {
                 timer.Interval = optionsDialogBox.IntervalNum;
-                universeWidth = optionsDialogBox.GetUniverseWidth();
+                universeWidth = optionsDialogBox.UniverseWidth;
                 universeHeight = optionsDialogBox.GetUniverseHeight();
             }
             // Change the size of the universe and scratchPad

@@ -17,18 +17,9 @@ namespace GOL_DerrickDomena
             InitializeComponent();
         }
 
-        //Interval
+        // Interval
         #region Timer Interval in Milliseconds
-        public int GetIntervalNum()
-        {
-            return (int)numericUpDownTimerInterval.Value;
-        }
-
-        public void SetIntervalNum(int interval)
-        {
-            numericUpDownTimerInterval.Value = interval;
-        }
-
+        // Property, gets and sets the value for IntervalNum.
         public int IntervalNum
         {
             get
@@ -43,16 +34,18 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
-        //Width
-        #region Width of Universe in Cells
-        public int GetUniverseWidth()
+        // Width
+        #region Width of Universe in Cells       
+        public int UniverseWidth
         {
-            return (int)numericUpDownWidthUniverse.Value;
-        }
-
-        public void SetUniverseWidth(int universeWidth)
-        {
-            numericUpDownWidthUniverse.Value = universeWidth;
+            get
+            {
+                return (int)numericUpDownWidthUniverse.Value;
+            }
+            set
+            {
+                numericUpDownWidthUniverse.Value = value;
+            }
         }
         #endregion
 
