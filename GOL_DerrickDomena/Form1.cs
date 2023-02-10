@@ -193,6 +193,10 @@ namespace GOL_DerrickDomena
         #endregion
 
         //Events
+        #region Events
+
+        // Timer Tick
+        #region Timer Tick
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -213,10 +217,18 @@ namespace GOL_DerrickDomena
                 timer.Enabled = false;
             }
         }
-  
+        #endregion
+
+        #endregion
+
+        // Graphics Panel
+        #region Graphics Panel
+
+        // Graphics Panel Paint
+        #region Graphics Panel Paint
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
-            
+
             // Calculate the width and height of each cell in pixels
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
             int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
@@ -235,7 +247,7 @@ namespace GOL_DerrickDomena
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
             {
-                
+
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
@@ -251,20 +263,20 @@ namespace GOL_DerrickDomena
                     StringFormat stringFormat = new StringFormat();
                     stringFormat.Alignment = StringAlignment.Center;
                     stringFormat.LineAlignment = StringAlignment.Center;
-             
+
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
                     {
-                        e.Graphics.FillRectangle(cellBrush, cellRect);             
+                        e.Graphics.FillRectangle(cellBrush, cellRect);
                     }
 
                     int neighbors = 0;
                     if (toroidalToolStripMenuItem1.Checked && !finiteToolStripMenuItem.Checked)
-                    {                       
+                    {
                         neighbors = CountNeighborsToroidal(x, y);
                     }
                     else if (!toroidalToolStripMenuItem1.Checked && finiteToolStripMenuItem.Checked)
-                    {                      
+                    {
                         neighbors = CountNeighborsFinite(x, y);
                     }
 
@@ -273,7 +285,7 @@ namespace GOL_DerrickDomena
                     {
 
                         Brush brush = Brushes.Green;
-                        
+
                         // Fill the cell with the number of neighbors and sets their colors
                         if (universe[x, y] == true && (neighbors == 1 || neighbors > 3))
                         {
@@ -282,7 +294,7 @@ namespace GOL_DerrickDomena
                         else if (universe[x, y] == false && neighbors != 3)
                         {
                             brush = Brushes.Red;
-                        }                      
+                        }
                         e.Graphics.DrawString(neighbors.ToString(), font, brush, cellRect, stringFormat);
                     }
 
@@ -300,7 +312,7 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
-          
+
             // Cleaning up pens and brushes
             gridPen.Dispose();
             //gridx10Pen.Dispose();
@@ -309,7 +321,11 @@ namespace GOL_DerrickDomena
             // Update status strip TimeInterval
             toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();
         }
+        #endregion
 
+
+        // Graphics Panel MouseClick
+        #region Graphics Panel MouseClick
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
         {
             // If the left mouse button was clicked
@@ -328,7 +344,7 @@ namespace GOL_DerrickDomena
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
 
-                if (universe[x,y])
+                if (universe[x, y])
                 {
                     aliveCount++;
                 }
@@ -345,9 +361,13 @@ namespace GOL_DerrickDomena
                 graphicsPanel1.Invalidate();
             }
         }
+        #endregion
+
+        #endregion
 
         // File MenuStrip
         #region File MenuStrip  
+
         //New
         #region New
         // Resets the universe and satus strip objects.
@@ -380,10 +400,12 @@ namespace GOL_DerrickDomena
             this.Close();
         }
         #endregion
+
         #endregion
 
         // View MenuStrip
         #region View MenuStrip
+
         //Neighbor Count
         #region Show NeighborCount
         //Turns on and off the view for the Neighbor Count
@@ -445,10 +467,12 @@ namespace GOL_DerrickDomena
             }
         }
         #endregion
+
         #endregion
 
-        //Run MenuStrip
+        // Run MenuStrip
         #region Run MenuStrip
+
         // Start
         #region Start ToolStrip
         // Starts the timer
@@ -497,10 +521,12 @@ namespace GOL_DerrickDomena
             }
         }
         #endregion
+
         #endregion
 
         // Settings MenuStrip
         #region Settings MenuStrip
+
         // Color - Back Color
         #region BackColor ToolStrip
         private void backColorToolStripMenuItem1_Click(object sender, EventArgs e)
