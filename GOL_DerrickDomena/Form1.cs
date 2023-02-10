@@ -119,6 +119,9 @@ namespace GOL_DerrickDomena
 
         // Count Neighbors
         #region Count Neighbors
+        // Count NeighborsFinite
+        #region CountNeighborsFinite
+        // A finite universe where the cells live only within the predetermined border.
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -130,32 +133,7 @@ namespace GOL_DerrickDomena
                 {
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
-                    //// if xOffset and yOffset are both equal to 0 then continue
-                    //if (xCheck == 0 && yCheck == 0)
-                    //{
-                    //    continue;
-                    //}
-                    //// if xCheck is less than 0 then continue
-                    //if (xCheck < 0)
-                    //{
-                    //    continue;
-                    //}
-                    //// if yCheck is less than 0 then continue
-                    //if (yCheck < 0)
-                    //{
-                    //    continue;
-                    //}
-                    //// if xCheck is greater than or equal too xLen then continue
-                    //if (xCheck >= xLen)
-                    //{
-                    //    continue;
-                    //}
-                    //// if yCheck is greater than or equal too yLen then continue
-                    //if (yCheck >= yLen)
-                    //{
-                    //    continue;
-                    //}
-
+                    // If checks for surrounding cells and adds count when current cell is alive.
                     if (xCheck >= 0 && xCheck < xLen && yCheck >= 0 && yCheck < yLen)
                     {
                         if (universe[xCheck, yCheck] == true)
@@ -165,24 +143,30 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
-
+            // If the middle cell is alive then minus 1 the current cell.
             if (universe[x, y])
             {
                 count--;
             }
-
             return count;
         }
+        #endregion
 
+        //Count NeighborsToroidal
+        #region CountNeighborsToroidal
+        // A infinite universe where the cells wrap around as if the universe is a sphere.
         private int CountNeighborsToroidal(int x, int y)
         {
-            int count = 0;          
+            int count = 0;
+            int xLen = universe.GetLength(0);
+            int yLen = universe.GetLength(1);
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
-                    int xCheck = (x + yOffset + universe.GetLength(0)) % universe.GetLength(0);
-                    int yCheck = (y + xOffset + universe.GetLength(1)) % universe.GetLength(1);
+                    // Calculates the xCheck and yCheck for surrounding cells and adds count when current cell is alive.
+                    int xCheck = (x + yOffset + xLen) % xLen;
+                    int yCheck = (y + xOffset + yLen) % yLen;
 
                     if (universe[xCheck, yCheck] == true)
                     {
@@ -190,12 +174,14 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
+            // If the middle cell is alive, subtract 1
             if (universe[x, y])
             {
                 count--;
             }
             return count;
         }
+        #endregion
         #endregion
 
         //Events
