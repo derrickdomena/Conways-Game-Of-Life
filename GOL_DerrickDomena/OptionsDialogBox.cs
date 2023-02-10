@@ -35,7 +35,8 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Width
-        #region Width of Universe in Cells       
+        #region Width of Universe in Cells    
+        // Property, gets and sets the value for UniverseWidth.
         public int UniverseWidth
         {
             get
