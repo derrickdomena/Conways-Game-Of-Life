@@ -19,14 +19,27 @@ namespace GOL_DerrickDomena
 
         // To Dialog Box
         #region Run to generation
-        public int GetNumber()
-        {
-            return (int)numericUpDownNumber.Value;
-        }
+        //public int GetNumber()
+        //{
+        //    return (int)numericUpDownNumber.Value;
+        //}
 
-        public void SetNumber(int number)
+        //public void SetNumber(int number)
+        //{
+        //    numericUpDownNumber.Value = number;
+        //}
+
+        public int Number
         {
-            numericUpDownNumber.Value = number;
+            get 
+            {
+                return (int)numericUpDownNumber.Value;
+            }
+
+            set 
+            { 
+                numericUpDownNumber.Value = value; 
+            }
         }
         #endregion
 

@@ -486,12 +486,14 @@ namespace GOL_DerrickDomena
         {
             ToDialogBox toDialogBox = new ToDialogBox();
             // Sets the current generationCount + 1, since we can't go back a generation on GOL.
-            toDialogBox.SetNumber(generationCount + 1);
+            //toDialogBox.SetNumber(generationCount + 1);
+            toDialogBox.Number = generationCount + 1;
 
             // Gets the generation from the numericUpDown and gives it to targetGeneration.
             if (DialogResult.OK == toDialogBox.ShowDialog())
             {
-                targetGeneration = toDialogBox.GetNumber();
+                //targetGeneration = toDialogBox.GetNumber();
+                targetGeneration = toDialogBox.Number;
                 // Then sets the timer to true.
                 timer.Enabled = true;
             }
