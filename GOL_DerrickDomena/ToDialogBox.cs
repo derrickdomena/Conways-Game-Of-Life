@@ -17,6 +17,8 @@ namespace GOL_DerrickDomena
             InitializeComponent();
         }
 
+        // To Dialog Box
+        #region Run to generation
         public int GetNumber()
         {
             return (int)numericUpDownNumber.Value;
@@ -26,5 +28,7 @@ namespace GOL_DerrickDomena
         {
             numericUpDownNumber.Value = number;
         }
+        #endregion
+
     }
 }

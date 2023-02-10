@@ -81,6 +81,11 @@
             // numericUpDownNumber
             // 
             this.numericUpDownNumber.Location = new System.Drawing.Point(118, 17);
+            this.numericUpDownNumber.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.numericUpDownNumber.Name = "numericUpDownNumber";
             this.numericUpDownNumber.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownNumber.TabIndex = 0;

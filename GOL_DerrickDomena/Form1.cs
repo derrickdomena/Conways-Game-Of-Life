@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
     {
+        //Universe width and height
+        int universeWidth = 30;
+        int universeHeight = 30;
+
         // The universe array
         bool[,] universe = new bool[30, 30];
         // The scratchPad array
@@ -15,14 +18,17 @@ namespace GOL_DerrickDomena
         // Drawing colors
         Color gridColor = Color.Gray;
         Color cellColor = Color.LightGray;
+        Color gridx10Color = Color.Black;
 
         // The Timer class
         Timer timer = new Timer();
 
-        // Keeps track of the generation count and alive count
-        int generations = 0;
-        int alive = 0;
+        // Memberfield variables
+        // Keeps track of generation and alive counts.
+        int generationCount = 0;
+        int aliveCount = 0;
 
+        // Status strip variables
         // Keeps track if the viewNeighborCount tool strip button was clicked.
         // Default is true, to enable viewing always just in case button is never clicked.
         bool viewNeighborCountClicked = true;
@@ -30,6 +36,8 @@ namespace GOL_DerrickDomena
         // Keeps track if the viewGrid tool strip button was clicked.
         // Default is true, to enable viewing always just in case button is never clicked.
         bool viewGridClicked = true;
+
+        int targetGeneration = 0;
 
         public Form1()
         {
@@ -43,7 +51,9 @@ namespace GOL_DerrickDomena
 
         // Calculate the next generation of cells
         private void NextGeneration()
-        {      
+        {
+            // Sets alive count to 0 on NextGeneration call.
+            aliveCount = 0;
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -55,7 +65,7 @@ namespace GOL_DerrickDomena
                     //Rules
                     // Checks living cells
                     if (universe[x, y] == true)
-                    {                                          
+                    {                       
                         //a. Living cells with less than 2 living neighbors die in the next generation.
                         //b. Living cells with more than 3 living neighbors die in the next generation.
                         if (count < 2 || count > 3)
@@ -65,23 +75,27 @@ namespace GOL_DerrickDomena
                         //c. Living cells with 2 or 3 living neighbors live in the next generation.
                         else if (count == 2 || count == 3)
                         {
-                            scratchPad[x, y] = true;                            
+                            scratchPad[x, y] = true;
+                            // Increment alive count
+                            aliveCount++;
                         }                    
                     }
                     //Checks dead cells
                     //d. Dead cells with exactly 3 living neighbors live in the next generation.
                     else if (universe[x, y] == false)
-                    { 
+                    {                      
                         if (count == 3)
                         {
-                            scratchPad[x, y] = true;                            
+                            scratchPad[x, y] = true;
+                            // Increment alive count
+                            aliveCount++;
                         }
                         // Sets position to false if neighbors not equal to 3
                         else if (count != 3)
                         {
                             scratchPad[x, y] = false;                           
                         }                      
-                    }                    
+                    }                  
                 }
             }
             
@@ -91,16 +105,20 @@ namespace GOL_DerrickDomena
             scratchPad = temp;
 
             // Increment generation count
-            generations++;
+            generationCount++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations = " + generationCount.ToString();
+           
+            // Update status strip alive
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
 
             //Invalidate the graphics panel
             graphicsPanel1.Invalidate();
         }
 
         // Count Neighbors
+        #region Count Neighbors
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -112,92 +130,94 @@ namespace GOL_DerrickDomena
                 {
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
-                    // if xOffset and yOffset are both equal to 0 then continue
-                    if (xCheck == 0 && yCheck == 0)
-                    {
-                        continue;
-                    }
-                    // if xCheck is less than 0 then continue
-                    if (xCheck < 0)
-                    {
-                        continue;
-                    }
-                    // if yCheck is less than 0 then continue
-                    if (yCheck < 0)
-                    {
-                        continue;
-                    }
-                    // if xCheck is greater than or equal too xLen then continue
-                    if (xCheck >= xLen)
-                    {
-                        continue;
-                    }
-                    // if yCheck is greater than or equal too yLen then continue
-                    if (yCheck >= yLen)
-                    {
-                        continue;
-                    }
+                    //// if xOffset and yOffset are both equal to 0 then continue
+                    //if (xCheck == 0 && yCheck == 0)
+                    //{
+                    //    continue;
+                    //}
+                    //// if xCheck is less than 0 then continue
+                    //if (xCheck < 0)
+                    //{
+                    //    continue;
+                    //}
+                    //// if yCheck is less than 0 then continue
+                    //if (yCheck < 0)
+                    //{
+                    //    continue;
+                    //}
+                    //// if xCheck is greater than or equal too xLen then continue
+                    //if (xCheck >= xLen)
+                    //{
+                    //    continue;
+                    //}
+                    //// if yCheck is greater than or equal too yLen then continue
+                    //if (yCheck >= yLen)
+                    //{
+                    //    continue;
+                    //}
 
-                    if (universe[xCheck, yCheck] == true) count++;
+                    if (xCheck >= 0 && xCheck < xLen && yCheck >= 0 && yCheck < yLen)
+                    {
+                        if (universe[xCheck, yCheck] == true)
+                        {
+                            count++;
+                        }
+                    }
                 }
             }
-            // Avoid repeating code from removing 1 from neighbors in graphicsPanel1 and count from NextGeneration if cell is alive in universe.
-            if (universe[x, y] == true)
+
+            if (universe[x, y])
             {
                 count--;
             }
-            
+
             return count;
         }
 
         private int CountNeighborsToroidal(int x, int y)
         {
-            int count = 0;
-            int xLen = universe.GetLength(0);
-            int yLen = universe.GetLength(1);
+            int count = 0;          
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
-                    int xCheck = x + xOffset;
-                    int yCheck = y + yOffset;
-                    // if xOffset and yOffset are both equal to 0 then continue
-                    if (xOffset == 0 && yOffset == 0)
-                    {
-                        continue;
-                    }
-                    // if xCheck is less than 0 then set to xLen - 1
-                    if (xCheck < 0)
-                    {
-                        xLen = -1;
-                    }
-                    // if yCheck is less than 0 then set to yLen - 1
-                    if (yCheck < 0)
-                    {
-                        yLen = -1;
-                    }
-                    // if xCheck is greater than or equal too xLen then set to 0
-                    if (xCheck >= xLen)
-                    {
-                        xLen = 0;
-                    }
-                    // if yCheck is greater than or equal too yLen then set to 0
-                    if (yCheck >= yLen)
-                    {
-                        yLen = 0;
-                    }
+                    int xCheck = (x + yOffset + universe.GetLength(0)) % universe.GetLength(0);
+                    int yCheck = (y + xOffset + universe.GetLength(1)) % universe.GetLength(1);
 
-                    if (universe[xCheck, yCheck] == true) count++;
+                    if (universe[xCheck, yCheck] == true)
+                    {
+                        count++;
+                    }
                 }
+            }
+            if (universe[x, y])
+            {
+                count--;
             }
             return count;
         }
+        #endregion
 
         //Events
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
-            NextGeneration();
+            // Event Run 
+            if (targetGeneration == 0)
+            {
+                NextGeneration();
+            }
+            // Event Run to Generation, if not reached generations.
+            else if (targetGeneration > generationCount)
+            {
+                NextGeneration();
+            }
+            // Event Run to Generation, target genrations was reached.
+            else
+            {
+                targetGeneration = 0;
+                timer.Enabled = false;
+            }
         }
   
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
@@ -212,6 +232,9 @@ namespace GOL_DerrickDomena
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
 
+            // A Pen for drawing the gridx10 lines (color, width)
+            Pen gridx10Pen = new Pen(gridx10Color, 2);
+
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
@@ -222,7 +245,6 @@ namespace GOL_DerrickDomena
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-
                     // A rectangle to represent each cell in pixels
                     Rectangle cellRect = Rectangle.Empty;
                     cellRect.X = x * cellWidth;
@@ -242,49 +264,42 @@ namespace GOL_DerrickDomena
                         e.Graphics.FillRectangle(cellBrush, cellRect);             
                     }
 
-                    // if statement that checks if viewNeighborCount is true.
-                    if (viewNeighborCountClicked)
-                    {
-                        int neighbors = CountNeighborsFinite(x, y);
-                        
+                    int neighbors = CountNeighborsFinite(x, y);
+                    //int neighbors = CountNeighborsToroidal(x, y);
 
+                    // if statement that checks if viewNeighborCount is true and that neighboars isn't equal to 0.
+                    if (viewNeighborCountClicked && neighbors != 0)
+                    {
+
+                        Brush brush = Brushes.Green;
+                        
                         // Fill the cell with the number of neighbors and sets their colors
-                        if (universe[x, y] == true)
-                        {                           
-                            if (neighbors == 2 || neighbors == 3)
-                            {                           
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
-                            }
-                            else if (neighbors == 1 || neighbors > 3)
-                            {
-                                
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
-                            }
+                        if (universe[x, y] == true && (neighbors == 1 || neighbors > 3))
+                        {
+                            brush = Brushes.Red;
                         }
-                        else if (universe[x, y] == false && neighbors != 0)
-                        {                          
-                            if (neighbors == 3)
-                            {
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
-                            }
-                            else if (neighbors != 3)
-                            {
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
-                            }
-                        }                 
+                        else if (universe[x, y] == false && neighbors != 3)
+                        {
+                            brush = Brushes.Red;
+                        }                      
+                        e.Graphics.DrawString(neighbors.ToString(), font, brush, cellRect, stringFormat);
                     }
 
                     // if statement that checks if viewGrid is true.
                     if (viewGridClicked)
-                    {                   
+                    {
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    }             
+                        // Outlines the gridx10 
+                        // Still needs work, when resizing the screen it doesn't work properly.
+                        //if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
+                        //{
+                        //    e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 10, cellRect.Height * 10);
+                        //}
+                    }
                 }
             }
-
-            
-
+          
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
@@ -308,86 +323,38 @@ namespace GOL_DerrickDomena
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
 
-                // Track alive cells
-                // Increment alive count
-                if (universe[x, y])
+                if (universe[x,y])
                 {
-                    alive++;
+                    aliveCount++;
                 }
                 else
                 {
-                    alive--;
+                    aliveCount--;
                 }
 
-                // Update status strip alive
-                // Still needs work, I need to find a way to track alive cells when cells die or get re-born.
-                toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString();
+
+                // Update status strip generations
+                toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
 
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        //Start
-        //Starts the timer
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            //Sets the timer to true
-            timer.Enabled = true;
-        }
-
-        //Pause
-        //Pauses the timer
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            //Sets the timer to false
-            timer.Enabled = false;
-        }
-
-        //Next
-        //Calls NextGeneration once
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            //Calls next generation once
-            NextGeneration();           
-        }
-
-        //To
-        //Skips to the specified generation
-        private void toToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ToDialogBox toDialogBox = new ToDialogBox();
-
-            int nextGenerationNumber = generations + 1;
-            toDialogBox.SetNumber(nextGenerationNumber);
-
-            if (DialogResult.OK == toDialogBox.ShowDialog())
-            {
-                nextGenerationNumber = toDialogBox.GetNumber();
-
-                for (int i = 0; i < nextGenerationNumber; i++)
-                {
-                    NextGeneration();
-                }              
-            }           
-        }
-
+        // File MenuStrip
+        #region File MenuStrip  
         //New
-        //Resets the universe and objects
+        #region New
+        // Resets the universe and satus strip objects.
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
-            // Reset the generation count and alive count
-            generations = 0;
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
-            alive = 0;
-            toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString();
+            // Resets the generation and alive count
+            generationCount = 0;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generationCount.ToString();
+            aliveCount = 0;
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
 
-            // Reset the universe
+            // Resets the universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -395,11 +362,25 @@ namespace GOL_DerrickDomena
                     universe[x, y] = false;
                 }
             }
+            // Calls graphicsPanel1 Invalidate to update panel.
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
-        //View
+        //Exit
+        #region Exit
+        // Closes the application.
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+        #endregion
+
+        // View MenuStrip
+        #region View MenuStrip
         //Neighbor Count
+        #region Show NeighborCount
         //Turns on and off the view for the Neighbor Count
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -410,11 +391,13 @@ namespace GOL_DerrickDomena
             else
             {
                 viewNeighborCountClicked = true;
-            }         
+            }
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
         //Grid
+        #region Show Grid
         //Turns on and off the view of the grid
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -428,9 +411,65 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+        #endregion    
+        #endregion
 
-        //Color
-        //Color - Back Color
+        //Run MenuStrip
+        #region Run MenuStrip
+        // Start
+        #region Start ToolStrip
+        // Starts the timer
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            //Sets the timer to true
+            timer.Enabled = true;
+        }
+        #endregion
+
+        // Pause
+        #region Pause ToolStrip
+        // Pauses the timer
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            //Sets the timer to false
+            timer.Enabled = false;
+        }
+        #endregion
+
+        // Next
+        #region Next ToolStrip
+        // Calls NextGeneration once
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            //Calls next generation once
+            NextGeneration();
+        }
+        #endregion
+
+        // To
+        #region To ToolStrip
+        //Run to Generation Dialog Box
+        private void toToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToDialogBox toDialogBox = new ToDialogBox();
+            // Sets the current generationCount + 1, since we can't go back a generation on GOL.
+            toDialogBox.SetNumber(generationCount + 1);
+
+            // Gets the generation from the numericUpDown and gives it to targetGeneration.
+            if (DialogResult.OK == toDialogBox.ShowDialog())
+            {
+                targetGeneration = toDialogBox.GetNumber();
+                // Then sets the timer to true.
+                timer.Enabled = true;
+            }
+        }
+        #endregion
+        #endregion
+
+        // Settings MenuStrip
+        #region Settings MenuStrip
+        // Color - Back Color
+        #region BackColor ToolStrip
         private void backColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ColorDialog backColorTool = new ColorDialog();
@@ -440,10 +479,12 @@ namespace GOL_DerrickDomena
             if (DialogResult.OK == backColorTool.ShowDialog())
             {
                 graphicsPanel1.BackColor = backColorTool.Color;
-            }         
+            }
         }
+        #endregion
 
-        //Color - Cell Color
+        // Color - Cell Color
+        #region CellColor ToolStrip
         private void cellColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ColorDialog cellColorTool = new ColorDialog();
@@ -456,8 +497,10 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
-        //Color - Grid Color
+        // Color - Grid Color
+        #region GridColor ToolStrip
         private void gridColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ColorDialog gridColorTool = new ColorDialog();
@@ -470,7 +513,29 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
-        
+        // Options
+        #region Options ToolStrip  
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsDialogBox optionsDialogBox = new OptionsDialogBox();
+
+            int timerInterval = timer.Interval;
+            optionsDialogBox.SetIntervalNum(timerInterval);
+
+            optionsDialogBox.SetUniverseWidth(universeWidth);
+
+            optionsDialogBox.SetUniverseHeight(universeHeight);
+            if (DialogResult.OK == optionsDialogBox.ShowDialog())
+            {
+                timerInterval = optionsDialogBox.GetIntervalNum();
+                universeWidth = optionsDialogBox.GetUniverseWidth();
+                universeHeight = optionsDialogBox.GetUniverseHeight();
+            }
+        }
+        #endregion
+
+        #endregion
     }
 }
