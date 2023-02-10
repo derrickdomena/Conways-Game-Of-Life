@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
     {
         //Universe width and height
-        int universeWidth = 30;
-        int universeHeight = 30;
+        private static int universeWidth = 30;
+        private static int universeHeight = 30;
 
         // The universe array
-        bool[,] universe = new bool[30, 30];
+        bool[,] universe = new bool[universeWidth, universeHeight];
         // The scratchPad array
-        bool[,] scratchPad = new bool[30, 30];      
+        bool[,] scratchPad = new bool[universeWidth, universeHeight];      
 
         // Drawing colors
         Color gridColor = Color.Gray;
         Color cellColor = Color.LightGray;
-        Color gridx10Color = Color.Black;
+        //Color gridx10Color = Color.Black;
 
         // The Timer class
         Timer timer = new Timer();
@@ -26,7 +27,7 @@ namespace GOL_DerrickDomena
         // Memberfield variables
         // Keeps track of generation and alive counts.
         int generationCount = 0;
-        int aliveCount = 0;
+        int aliveCount = 0;        
 
         // Status strip variables
         // Keeps track if the viewNeighborCount tool strip button was clicked.
@@ -59,8 +60,15 @@ namespace GOL_DerrickDomena
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     //Neighbor count
-                    int count = CountNeighborsFinite(x, y);
-                    //int count = CountNeighborsToroidal(x, y);
+                    int count = 0;
+                    if (toroidalToolStripMenuItem1.Checked && !finiteToolStripMenuItem.Checked)
+                    {
+                        count = CountNeighborsToroidal(x, y);
+                    }
+                    else if (!toroidalToolStripMenuItem1.Checked && finiteToolStripMenuItem.Checked)
+                    {                     
+                        count = CountNeighborsFinite(x, y);
+                    }                                
 
                     //Rules
                     // Checks living cells
@@ -107,10 +115,10 @@ namespace GOL_DerrickDomena
             // Increment generation count
             generationCount++;
 
-            // Update status strip generations
+            // Update status strip generationCount
             toolStripStatusLabelGenerations.Text = "Generations = " + generationCount.ToString();
            
-            // Update status strip alive
+            // Update status strip aliveCount
             toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
 
             //Invalidate the graphics panel
@@ -208,7 +216,7 @@ namespace GOL_DerrickDomena
   
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
-
+            
             // Calculate the width and height of each cell in pixels
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
             int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
@@ -219,7 +227,7 @@ namespace GOL_DerrickDomena
             Pen gridPen = new Pen(gridColor, 1);
 
             // A Pen for drawing the gridx10 lines (color, width)
-            Pen gridx10Pen = new Pen(gridx10Color, 2);
+            //Pen gridx10Pen = new Pen(gridx10Color, 2);
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
@@ -227,7 +235,7 @@ namespace GOL_DerrickDomena
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
             {
-
+                
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
@@ -250,8 +258,15 @@ namespace GOL_DerrickDomena
                         e.Graphics.FillRectangle(cellBrush, cellRect);             
                     }
 
-                    int neighbors = CountNeighborsFinite(x, y);
-                    //int neighbors = CountNeighborsToroidal(x, y);
+                    int neighbors = 0;
+                    if (toroidalToolStripMenuItem1.Checked && !finiteToolStripMenuItem.Checked)
+                    {                       
+                        neighbors = CountNeighborsToroidal(x, y);
+                    }
+                    else if (!toroidalToolStripMenuItem1.Checked && finiteToolStripMenuItem.Checked)
+                    {                      
+                        neighbors = CountNeighborsFinite(x, y);
+                    }
 
                     // if statement that checks if viewNeighborCount is true and that neighboars isn't equal to 0.
                     if (viewNeighborCountClicked && neighbors != 0)
@@ -288,7 +303,11 @@ namespace GOL_DerrickDomena
           
             // Cleaning up pens and brushes
             gridPen.Dispose();
+            //gridx10Pen.Dispose();
             cellBrush.Dispose();
+
+            // Update status strip TimeInterval
+            toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();
         }
 
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
@@ -507,21 +526,46 @@ namespace GOL_DerrickDomena
         {
             OptionsDialogBox optionsDialogBox = new OptionsDialogBox();
 
-            int timerInterval = timer.Interval;
-            optionsDialogBox.SetIntervalNum(timerInterval);
-
+            // Sets the time interval
+            optionsDialogBox.SetIntervalNum(timer.Interval);
+            // Sets the universe width
             optionsDialogBox.SetUniverseWidth(universeWidth);
-
+            // Sets the universe height
             optionsDialogBox.SetUniverseHeight(universeHeight);
             if (DialogResult.OK == optionsDialogBox.ShowDialog())
             {
-                timerInterval = optionsDialogBox.GetIntervalNum();
+                timer.Interval = optionsDialogBox.GetIntervalNum();
                 universeWidth = optionsDialogBox.GetUniverseWidth();
                 universeHeight = optionsDialogBox.GetUniverseHeight();
             }
+            // Change the size of the universe and scratchPad
+            universe = new bool[universeWidth, universeHeight];
+            scratchPad = new bool[universeWidth, universeHeight];
+
+            // Call graphicsPanel1 Invalidate to re-paint the screen.
+            graphicsPanel1.Invalidate();
         }
+
         #endregion
 
         #endregion
+
+        private void finiteToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (finiteToolStripMenuItem.Checked == true)
+            {
+                toroidalToolStripMenuItem1.Checked = false;
+                finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
+            }
+        }
+
+        private void toroidalToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toroidalToolStripMenuItem1.Checked == true)
+            {
+                finiteToolStripMenuItem.Checked = false;
+                toroidalToolStripMenuItem1.Checked = !finiteToolStripMenuItem.Checked;
+            }
+        }
     }
 }
