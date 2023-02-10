@@ -417,6 +417,34 @@ namespace GOL_DerrickDomena
             graphicsPanel1.Invalidate();
         }
         #endregion    
+
+        // Finite ToolStrip
+        #region Finite ToolStrip
+        // Checks if the Finite check box is true.
+        // If Finite mode is checked, then Toroidal mode will be set to false and unchecked.
+        private void finiteToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (finiteToolStripMenuItem.Checked == true)
+            {
+                toroidalToolStripMenuItem1.Checked = false;
+                finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
+            }
+        }
+        #endregion
+
+        // Toroidal ToolStrip
+        #region Toroidal ToolStrip
+        // Checks if the Toroidal check box is true.
+        // If Toroidal mode is checked, then Finite mode will be set to false and unchecked.
+        private void toroidalToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toroidalToolStripMenuItem1.Checked == true)
+            {
+                finiteToolStripMenuItem.Checked = false;
+                toroidalToolStripMenuItem1.Checked = !finiteToolStripMenuItem.Checked;
+            }
+        }
+        #endregion
         #endregion
 
         //Run MenuStrip
@@ -549,34 +577,5 @@ namespace GOL_DerrickDomena
         #endregion
 
         #endregion
-
-        // Finite ToolStrip
-        #region Finite ToolStrip
-        // Checks if the Finite check box is true.
-        // If Finite mode is checked, then Toroidal mode will be set to false and unchecked.
-        private void finiteToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (finiteToolStripMenuItem.Checked == true)
-            {
-                toroidalToolStripMenuItem1.Checked = false;
-                finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
-            }
-        }
-        #endregion
-
-        // Toroidal ToolStrip
-        #region Toroidal ToolStrip
-        // Checks if the Toroidal check box is true.
-        // If Toroidal mode is checked, then Finite mode will be set to false and unchecked.
-        private void toroidalToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (toroidalToolStripMenuItem1.Checked == true)
-            {
-                finiteToolStripMenuItem.Checked = false;
-                toroidalToolStripMenuItem1.Checked = !finiteToolStripMenuItem.Checked;
-            }
-        }
-        #endregion
-
     }
 }
