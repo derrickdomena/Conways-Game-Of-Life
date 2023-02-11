@@ -10,7 +10,7 @@ namespace GOL_DerrickDomena
         // Variable Definitions and Initializations.
         #region Variable Definitions and Initializations
 
-        //Static values for universe width and height
+        // Static values for universe width and height
         private static int universeWidth = 30;
         private static int universeHeight = 30;
 
@@ -21,7 +21,7 @@ namespace GOL_DerrickDomena
         // Drawing colors
         Color gridColor = Color.Gray;
         Color cellColor = Color.LightGray;
-        //Color gridx10Color = Color.Black;
+        Color gridx10Color = Color.Black;
 
         // The Timer class
         Timer timer = new Timer();
@@ -42,7 +42,7 @@ namespace GOL_DerrickDomena
 
         // Keeps track of toggleing the view for the HUD tool strip button.
         bool viewHUDClicked = true;
-        string hudMode = "";
+        
         #endregion
 
         // Keeps track of the generation that the user inputs for Run to generation.
@@ -56,7 +56,24 @@ namespace GOL_DerrickDomena
 
             // Setup the timer
             timer.Interval = 100; // milliseconds
-            timer.Tick += Timer_Tick;      
+            timer.Tick += Timer_Tick;
+
+            // Settings Menu Properties
+            #region Properties for Saving Settings
+            // Reading Properties
+            // Back Color
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            // Cell Color
+            cellColor = Properties.Settings.Default.CellColor;
+            // Grid Color
+            gridColor = Properties.Settings.Default.GridColor;
+            // Timer Interval
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+            // Universe Width
+            universeWidth = Properties.Settings.Default.UniverseWidth;
+            // Universe Height
+            universeHeight = Properties.Settings.Default.UniverseHeight;
+            #endregion
         }
 
         // Next Generation
@@ -204,7 +221,7 @@ namespace GOL_DerrickDomena
         #endregion
         #endregion
 
-        //Events
+        // Events
         #region Events
 
         // Timer Tick
@@ -250,9 +267,6 @@ namespace GOL_DerrickDomena
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
 
-            // A Pen for drawing the gridx10 lines (color, width)
-            //Pen gridx10Pen = new Pen(gridx10Color, 2);
-
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
@@ -293,38 +307,34 @@ namespace GOL_DerrickDomena
                     }
                     
                     // Neighbor Count
-                    // if statement that checks if viewNeighborCount is true and that neighboars isn't equal to 0.
+                    // If statement that checks if viewNeighborCountClicked is true and that neighbors isn't equal to 0.
                     if (viewNeighborCountClicked && neighbors != 0)
                     {
                         Brush viewNeighborbrush = Brushes.Green;
-
+                        
                         // Fill the cell with the number of neighbors and sets their colors
                         if (universe[x, y] == true && (neighbors == 1 || neighbors > 3))
                         {
-                            viewNeighborbrush = Brushes.Red;
+                            viewNeighborbrush = Brushes.Red;                          
                         }
                         else if (universe[x, y] == false && neighbors != 3)
                         {
-                            viewNeighborbrush = Brushes.Red;
+                            viewNeighborbrush = Brushes.Red;                         
                         }
                         e.Graphics.DrawString(neighbors.ToString(), font, viewNeighborbrush, cellRect, stringFormat);
-
-                        // Cleaning up brushes
-                        viewNeighborbrush.Dispose();
+                                           
                     }
 
                     // Grid
-                    // if statement that checks if viewGrid is true.
+                    // If statement that checks if viewGridClicked is true.
                     if (viewGridClicked)
                     {
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                         // Outlines the gridx10 
                         // Still needs work, when resizing the screen it doesn't work properly.
-                        //if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
-                        //{
-                        //    e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 10, cellRect.Height * 10);
-                        //}
+                        //Pen gridx10Pen = new Pen(Brushes.Black, 5);
+                        //e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 100, cellRect.Height * 100);
                     }
                 }
             }
@@ -336,6 +346,7 @@ namespace GOL_DerrickDomena
 
             // Update status strip TimeInterval
             toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();
+          
         }
         #endregion
 
@@ -636,6 +647,50 @@ namespace GOL_DerrickDomena
         #endregion
 
         #endregion
-       
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Update the Property
+            Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
+            Properties.Settings.Default.CellColor = cellColor;
+            Properties.Settings.Default.GridColor = gridColor;
+
+            Properties.Settings.Default.TimerInterval = timer.Interval;
+            Properties.Settings.Default.UniverseWidth = universeWidth;
+            Properties.Settings.Default.UniverseHeight = universeHeight;
+
+            // Take the memory representation of the file and write it out
+            Properties.Settings.Default.Save();
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+
+            // Reading the Property
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            gridColor = Properties.Settings.Default.GridColor;
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+            universeWidth = Properties.Settings.Default.UniverseWidth;
+            universeHeight = Properties.Settings.Default.UniverseHeight;
+          
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+
+            // Reading the Property
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            gridColor = Properties.Settings.Default.GridColor;
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+            universeWidth = Properties.Settings.Default.UniverseWidth;
+            universeHeight = Properties.Settings.Default.UniverseHeight;
+           
+        }
     }
 }

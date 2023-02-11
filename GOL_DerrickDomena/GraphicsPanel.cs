@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,6 @@ namespace GOL_DerrickDomena
 
             // Allow repainting when the window is resized.
             this.SetStyle(ControlStyles.ResizeRedraw, true);
-        }
+        }      
     }
 }
