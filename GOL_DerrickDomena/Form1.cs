@@ -555,7 +555,7 @@ namespace GOL_DerrickDomena
             {
                 viewMode = "Finite";
                 toroidalToolStripMenuItem1.Checked = false;
-                finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
+                finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;            
             }
             graphicsPanel1.Invalidate();
         }
@@ -786,6 +786,21 @@ namespace GOL_DerrickDomena
         #endregion
 
         #endregion
- 
+
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (finiteToolStripMenuItem.Checked == false)
+            {
+                toroidalToolStripMenuItem1.Checked = true;
+            }
+        }
+
+        private void toroidalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (toroidalToolStripMenuItem1.Checked == false)
+            {
+                finiteToolStripMenuItem.Checked = true;
+            }
+        }
     }
 }
