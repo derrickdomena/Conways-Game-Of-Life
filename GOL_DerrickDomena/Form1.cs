@@ -46,7 +46,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Keeps track of the generation that the user inputs for Run to generation.
-        int targetGeneration = 0;
+        int targetGeneration = 0;       
         #endregion
 
         // InitializeComponent and timer setup.
@@ -369,6 +369,26 @@ namespace GOL_DerrickDomena
                             e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width*10, cellRect.Height*10);
                         }
                     }
+
+                    
+                }
+            }
+            //HUD
+            if (viewHUDClicked)
+            {
+                // Font and stringFormat for dead cells and alive cells.
+                Font fontHUD = new Font("Arial", 12f);
+                StringFormat stringFormatHUD = new StringFormat();
+                stringFormatHUD.Alignment = StringAlignment.Near;
+                stringFormatHUD.LineAlignment = StringAlignment.Far;
+                
+                if (finiteToolStripMenuItem.Checked)
+                {
+                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: Finite" + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
+                }
+                else if (toroidalToolStripMenuItem1.Checked)
+                {
+                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: Toroidal" + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
                 }
             }
 
@@ -522,10 +542,10 @@ namespace GOL_DerrickDomena
         private void finiteToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (finiteToolStripMenuItem.Checked == true)
-            {
+            {               
                 toroidalToolStripMenuItem1.Checked = false;
                 finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
-            }           
+            }          
         }
         #endregion
 
@@ -745,7 +765,7 @@ namespace GOL_DerrickDomena
             universeWidth = Properties.Settings.Default.UniverseWidth;
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-
+            
             graphicsPanel1.Invalidate();
         }
         #endregion
