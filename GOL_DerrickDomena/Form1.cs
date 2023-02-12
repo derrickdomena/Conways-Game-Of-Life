@@ -48,18 +48,21 @@ namespace GOL_DerrickDomena
         // Keeps track of the generation that the user inputs for Run to generation.
         int targetGeneration = 0;
 
-        // ViewMode sets the view for HUD if its Finite or Torodial.
+        // viewMode sets the view for HUD if its Finite or Torodial.
         string viewMode = "";
         #endregion
 
-        // InitializeComponent and timer setup.
+        // InitializeComponent
+        // Includes Timer Setup and Settings Menu Properties
         public Form1()
         {
             InitializeComponent();
 
-            // Setup the timer
+            // Timer Setup
+            #region Timer
             timer.Interval = 100; // milliseconds
             timer.Tick += Timer_Tick;
+            #endregion
 
             // Settings Menu Properties
             #region Properties for Saving Settings
@@ -160,6 +163,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Count Neighbors
+        // Includes Finite and Toroidal
         #region Count Neighbors
         // Count NeighborsFinite
         #region CountNeighborsFinite
@@ -227,6 +231,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Events
+        // Includes Timer Tick and Properties Close Event
         #region Events
 
         // Timer Tick Event
@@ -283,6 +288,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Graphics Panel
+        // Includes Paint and MouseClick
         #region Graphics Panel
 
         // Graphics Panel Paint
@@ -447,6 +453,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // File MenuStrip
+        // Includes New, Open, Import, Save, and Exit
         #region File MenuStrip  
 
         //New
@@ -485,9 +492,10 @@ namespace GOL_DerrickDomena
         #endregion
 
         // View MenuStrip
+        // Includes HUD, Neighbor Count, Grid, Finite, and Toroidal
         #region View MenuStrip
 
-        // HUD
+        // HUD ToolStrip
         #region Show HUD
         private void hudToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -503,7 +511,7 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
-        // Neighbor Count
+        // Neighbor Count ToolStrip
         #region Show NeighborCount
         //Turns on and off the view for the Neighbor Count
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -520,7 +528,7 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
-        // Grid
+        // Grid ToolStrip
         #region Show Grid
         //Turns on and off the view of the grid
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -572,6 +580,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Run MenuStrip
+        // Includes Start, Pause, Next, and To 
         #region Run MenuStrip
 
         // Start
@@ -626,6 +635,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Settings MenuStrip
+        // Includes Color - Back, Cell, Grid, Gridx10. Options, Reset, and Reload.
         #region Settings MenuStrip
 
         // Color - Back Color
