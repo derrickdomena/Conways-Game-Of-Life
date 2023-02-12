@@ -11,8 +11,8 @@ namespace GOL_DerrickDomena
         #region Variable Definitions and Initializations
 
         // Static values for universe width and height
-        private static int universeWidth = 30;
-        private static int universeHeight = 30;
+        private static int universeWidth = Properties.Settings.Default.UniverseWidth;
+        private static int universeHeight = Properties.Settings.Default.UniverseHeight;
 
         // The universe array and scratchPad array
         bool[,] universe = new bool[universeWidth, universeHeight];
