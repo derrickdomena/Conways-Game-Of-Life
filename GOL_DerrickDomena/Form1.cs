@@ -46,7 +46,10 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Keeps track of the generation that the user inputs for Run to generation.
-        int targetGeneration = 0;       
+        int targetGeneration = 0;
+
+        // ViewMode
+        string viewMode = "";
         #endregion
 
         // InitializeComponent and timer setup.
@@ -381,11 +384,13 @@ namespace GOL_DerrickDomena
                 
                 if (finiteToolStripMenuItem.Checked)
                 {
-                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: Finite" + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
+                    viewMode = "Finite";
+                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: " + viewMode + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
                 }
                 else if (toroidalToolStripMenuItem1.Checked)
                 {
-                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: Toroidal" + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
+                    viewMode = "Toroidal";
+                    e.Graphics.DrawString("Generations: " + generationCount.ToString() + "\n" + "Cell Count: " + aliveCount.ToString() + "\n" + "Boundary Type: "+ viewMode + "\n" + "Universe Size: {Width=" + universeWidth.ToString() + ", Height=" + universeHeight.ToString() + "}", fontHUD, Brushes.LightCoral, graphicsPanel1.ClientRectangle, stringFormatHUD);
                 }
             }
 
@@ -539,10 +544,12 @@ namespace GOL_DerrickDomena
         private void finiteToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (finiteToolStripMenuItem.Checked == true)
-            {               
+            {
+                viewMode = "Finite";
                 toroidalToolStripMenuItem1.Checked = false;
                 finiteToolStripMenuItem.Checked = !toroidalToolStripMenuItem1.Checked;
-            }          
+            }
+            graphicsPanel1.Invalidate();
         }
         #endregion
 
@@ -554,9 +561,11 @@ namespace GOL_DerrickDomena
         {
             if (toroidalToolStripMenuItem1.Checked == true)
             {
+                viewMode = "Toroidal";
                 finiteToolStripMenuItem.Checked = false;
                 toroidalToolStripMenuItem1.Checked = !finiteToolStripMenuItem.Checked;
             }
+            graphicsPanel1.Invalidate();
         }
         #endregion
 
