@@ -333,11 +333,12 @@ namespace GOL_DerrickDomena
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                         // Outlines the gridx10 
                         // Still needs work, when resizing the screen it doesn't work properly.
-                        //if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
-                        //{
-                        //    Pen gridx10Pen = new Pen(gridx10Color, 2);
-                        //    e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 100, cellRect.Height * 100);
-                        //}
+
+                        if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
+                        {
+                            Pen gridx10Pen = new Pen(gridx10Color, 2);
+                            e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width*10, cellRect.Height*10);
+                        }
                     }
                 }
             }
@@ -619,6 +620,20 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
+        // Color - Gridx10 Color
+        private void gridX10ColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog gridx10ColorTool = new ColorDialog();
+
+            gridx10ColorTool.Color = gridx10Color;
+
+            if (DialogResult.OK == gridx10ColorTool.ShowDialog())
+            {
+                gridx10Color = gridx10ColorTool.Color;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
         // Options
         #region Options ToolStrip  
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -707,5 +722,7 @@ namespace GOL_DerrickDomena
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
         }
+
+        
     }
 }

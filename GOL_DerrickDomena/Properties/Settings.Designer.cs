@@ -93,5 +93,17 @@ namespace GOL_DerrickDomena.Properties {
                 this["UniverseHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color Gridx10Color {
+            get {
+                return ((global::System.Drawing.Color)(this["Gridx10Color"]));
+            }
+            set {
+                this["Gridx10Color"] = value;
+            }
+        }
     }
 }
