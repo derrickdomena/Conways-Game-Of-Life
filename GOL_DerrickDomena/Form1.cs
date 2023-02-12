@@ -82,8 +82,8 @@ namespace GOL_DerrickDomena
         }
 
         // Next Generation
+        #region Next Generation
         // Calculate the next generation of cells
-        #region NextGeneration
         private void NextGeneration()
         {
             // Sets alive count to 0 on NextGeneration call.
@@ -743,7 +743,7 @@ namespace GOL_DerrickDomena
             universeWidth = Properties.Settings.Default.UniverseWidth;
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-
+           
             graphicsPanel1.Invalidate();
         }
         #endregion
@@ -755,7 +755,6 @@ namespace GOL_DerrickDomena
             Properties.Settings.Default.Reload();
 
             // Reading the Property
-
             // Back Color
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
             // Cell Color
@@ -771,7 +770,7 @@ namespace GOL_DerrickDomena
             universeWidth = Properties.Settings.Default.UniverseWidth;
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-            
+
             graphicsPanel1.Invalidate();
         }
         #endregion
