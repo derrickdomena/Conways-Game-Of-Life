@@ -67,6 +67,8 @@ namespace GOL_DerrickDomena
             cellColor = Properties.Settings.Default.CellColor;
             // Grid Color
             gridColor = Properties.Settings.Default.GridColor;
+            // Gridx10 Color
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
             // Timer Interval
             timer.Interval = Properties.Settings.Default.TimerInterval;
             // Universe Width
@@ -224,8 +226,8 @@ namespace GOL_DerrickDomena
         // Events
         #region Events
 
-        // Timer Tick
-        #region Timer Tick
+        // Timer Tick Event
+        #region Timer Tick Event
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -245,6 +247,33 @@ namespace GOL_DerrickDomena
                 targetGeneration = 0;
                 timer.Enabled = false;
             }
+        }
+        #endregion
+
+        // Close Event
+        #region Close Event
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Update the Property
+
+            // Back Color
+            Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
+            // Cell Color
+            Properties.Settings.Default.CellColor = cellColor;
+            // Grid Color
+            Properties.Settings.Default.GridColor = gridColor;
+            // Gridx10 Color
+            Properties.Settings.Default.Gridx10Color = gridx10Color;
+
+            // Timer Interval
+            Properties.Settings.Default.TimerInterval = timer.Interval;
+            // Universe Width
+            Properties.Settings.Default.UniverseWidth = universeWidth;
+            // Universe Height
+            Properties.Settings.Default.UniverseHeight = universeHeight;
+
+            // Take the memory representation of the file and write it out
+            Properties.Settings.Default.Save();
         }
         #endregion
 
@@ -621,6 +650,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Color - Gridx10 Color
+        #region Gridx10Color ToolString
         private void gridX10ColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog gridx10ColorTool = new ColorDialog();
@@ -633,6 +663,7 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
         // Options
         #region Options ToolStrip  
@@ -663,66 +694,63 @@ namespace GOL_DerrickDomena
 
         #endregion
 
-        #endregion
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            // Update the Property
-            // Back Color
-            Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
-            // Cell Color
-            Properties.Settings.Default.CellColor = cellColor;
-            // Grid Color
-            Properties.Settings.Default.GridColor = gridColor;
-            // Timer Interval
-            Properties.Settings.Default.TimerInterval = timer.Interval;
-            // Universe Width
-            Properties.Settings.Default.UniverseWidth = universeWidth;
-            // Universe Height
-            Properties.Settings.Default.UniverseHeight = universeHeight;
-
-            // Take the memory representation of the file and write it out
-            Properties.Settings.Default.Save();
-        }
-
+        // Reset
+        #region Reset ToolStrip
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
 
             // Reading the Property
+
             // Back Color
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
             // Cell Color
             cellColor = Properties.Settings.Default.CellColor;
             // Grid Color
             gridColor = Properties.Settings.Default.GridColor;
-            // Timer Interval
-            timer.Interval = Properties.Settings.Default.TimerInterval;
-            // Universe Width
-            universeWidth = Properties.Settings.Default.UniverseWidth;
-            // Universe Height
-            universeHeight = Properties.Settings.Default.UniverseHeight;       
-        }
+            // Gridx10 Color
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
 
-        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Reload();
-
-            // Reading the Property
-            // Back Color
-            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
-            // Cell Color
-            cellColor = Properties.Settings.Default.CellColor;
-            // Grid Color
-            gridColor = Properties.Settings.Default.GridColor;
             // Timer Interval
             timer.Interval = Properties.Settings.Default.TimerInterval;
             // Universe Width
             universeWidth = Properties.Settings.Default.UniverseWidth;
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-        }
 
-        
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+        // Reload
+        #region Reload ToolStrip
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+
+            // Reading the Property
+
+            // Back Color
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            // Cell Color
+            cellColor = Properties.Settings.Default.CellColor;
+            // Grid Color
+            gridColor = Properties.Settings.Default.GridColor;
+            // Gridx10 Color
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
+
+            // Timer Interval
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+            // Universe Width
+            universeWidth = Properties.Settings.Default.UniverseWidth;
+            // Universe Height
+            universeHeight = Properties.Settings.Default.UniverseHeight;
+
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+        #endregion
+ 
     }
 }
