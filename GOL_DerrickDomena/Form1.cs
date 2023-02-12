@@ -48,7 +48,7 @@ namespace GOL_DerrickDomena
         // Keeps track of the generation that the user inputs for Run to generation.
         int targetGeneration = 0;
 
-        // ViewMode
+        // ViewMode sets the view for HUD if its Finite or Torodial.
         string viewMode = "";
         #endregion
 
