@@ -348,8 +348,7 @@ namespace GOL_DerrickDomena
             cellBrush.Dispose();
 
             // Update status strip TimeInterval
-            toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();
-          
+            toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();         
         }
         #endregion
 
@@ -654,12 +653,17 @@ namespace GOL_DerrickDomena
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             // Update the Property
+            // Back Color
             Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
+            // Cell Color
             Properties.Settings.Default.CellColor = cellColor;
+            // Grid Color
             Properties.Settings.Default.GridColor = gridColor;
-
+            // Timer Interval
             Properties.Settings.Default.TimerInterval = timer.Interval;
+            // Universe Width
             Properties.Settings.Default.UniverseWidth = universeWidth;
+            // Universe Height
             Properties.Settings.Default.UniverseHeight = universeHeight;
 
             // Take the memory representation of the file and write it out
@@ -671,14 +675,18 @@ namespace GOL_DerrickDomena
             Properties.Settings.Default.Reset();
 
             // Reading the Property
+            // Back Color
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            // Cell Color
             cellColor = Properties.Settings.Default.CellColor;
+            // Grid Color
             gridColor = Properties.Settings.Default.GridColor;
-
+            // Timer Interval
             timer.Interval = Properties.Settings.Default.TimerInterval;
+            // Universe Width
             universeWidth = Properties.Settings.Default.UniverseWidth;
-            universeHeight = Properties.Settings.Default.UniverseHeight;
-          
+            // Universe Height
+            universeHeight = Properties.Settings.Default.UniverseHeight;       
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -686,14 +694,18 @@ namespace GOL_DerrickDomena
             Properties.Settings.Default.Reload();
 
             // Reading the Property
+            // Back Color
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            // Cell Color
             cellColor = Properties.Settings.Default.CellColor;
+            // Grid Color
             gridColor = Properties.Settings.Default.GridColor;
-
+            // Timer Interval
             timer.Interval = Properties.Settings.Default.TimerInterval;
+            // Universe Width
             universeWidth = Properties.Settings.Default.UniverseWidth;
+            // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-           
         }
     }
 }
