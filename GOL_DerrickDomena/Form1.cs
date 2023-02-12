@@ -559,6 +559,16 @@ namespace GOL_DerrickDomena
             }
             graphicsPanel1.Invalidate();
         }
+
+        // If Finite Mode is Clicked and it is also Checked
+        // Assume that the user wants to disable Finite Mode and enable Toroidal Mode
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (finiteToolStripMenuItem.Checked == false)
+            {
+                toroidalToolStripMenuItem1.Checked = true;
+            }
+        }
         #endregion
 
         // Toroidal ToolStrip
@@ -574,6 +584,16 @@ namespace GOL_DerrickDomena
                 toroidalToolStripMenuItem1.Checked = !finiteToolStripMenuItem.Checked;
             }
             graphicsPanel1.Invalidate();
+        }
+
+        // If Toroidal Mode is Clicked and it is also Checked
+        // Assume that the user wants to disable Toroidal Mode and Enable Finite Mode
+        private void toroidalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (toroidalToolStripMenuItem1.Checked == false)
+            {
+                finiteToolStripMenuItem.Checked = true;
+            }
         }
         #endregion
 
@@ -787,20 +807,8 @@ namespace GOL_DerrickDomena
 
         #endregion
 
-        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (finiteToolStripMenuItem.Checked == false)
-            {
-                toroidalToolStripMenuItem1.Checked = true;
-            }
-        }
+        
 
-        private void toroidalToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (toroidalToolStripMenuItem1.Checked == false)
-            {
-                finiteToolStripMenuItem.Checked = true;
-            }
-        }
+        
     }
 }
