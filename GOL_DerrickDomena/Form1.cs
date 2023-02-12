@@ -333,8 +333,11 @@ namespace GOL_DerrickDomena
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                         // Outlines the gridx10 
                         // Still needs work, when resizing the screen it doesn't work properly.
-                        //Pen gridx10Pen = new Pen(Brushes.Black, 5);
-                        //e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 100, cellRect.Height * 100);
+                        //if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
+                        //{
+                        //    Pen gridx10Pen = new Pen(gridx10Color, 2);
+                        //    e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 100, cellRect.Height * 100);
+                        //}
                     }
                 }
             }
