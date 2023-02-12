@@ -410,7 +410,6 @@ namespace GOL_DerrickDomena
         }
         #endregion
 
-
         // Graphics Panel MouseClick
         #region Graphics Panel MouseClick
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
@@ -466,6 +465,7 @@ namespace GOL_DerrickDomena
             toolStripStatusLabelGenerations.Text = "Generations = " + generationCount.ToString();
             aliveCount = 0;
             toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
+            timer.Enabled = false;
 
             // Resets the universe
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -807,8 +807,5 @@ namespace GOL_DerrickDomena
 
         #endregion
 
-        
-
-        
     }
 }
