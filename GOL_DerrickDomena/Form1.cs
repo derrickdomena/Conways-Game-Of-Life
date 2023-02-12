@@ -295,9 +295,16 @@ namespace GOL_DerrickDomena
 
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
+            Pen gridx10Pen = new Pen(gridx10Color, 2);
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
+
+            // Font and stringFormat for dead cells and alive cells.
+            Font font = new Font("Arial", 8f);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
 
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -311,12 +318,6 @@ namespace GOL_DerrickDomena
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
-
-                    // Font and stringFormat for dead cells and alive cells.
-                    Font font = new Font("Arial", 8f);                  
-                    StringFormat stringFormat = new StringFormat();
-                    stringFormat.Alignment = StringAlignment.Center;
-                    stringFormat.LineAlignment = StringAlignment.Center;
 
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
@@ -361,16 +362,12 @@ namespace GOL_DerrickDomena
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                         // Outlines the gridx10 
-                        // Still needs work, when resizing the screen it doesn't work properly.
-
+                        // Still needs work, when resizing the screen it draws a string even when gridx10 is not mod 10 = 0.
                         if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
-                        {
-                            Pen gridx10Pen = new Pen(gridx10Color, 2);
+                        {                          
                             e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width*10, cellRect.Height*10);
                         }
-                    }
-
-                    
+                    }          
                 }
             }
             //HUD
@@ -394,7 +391,7 @@ namespace GOL_DerrickDomena
 
             // Cleaning up pens and brushes
             gridPen.Dispose();
-            //gridx10Pen.Dispose();
+            gridx10Pen.Dispose();
             cellBrush.Dispose();
 
             // Update status strip TimeInterval
