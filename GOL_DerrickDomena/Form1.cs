@@ -174,12 +174,15 @@ namespace GOL_DerrickDomena
             int count = 0;
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);
+
+
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
+
                     // If checks for surrounding cells and adds count when current cell is alive.
                     if (xCheck >= 0 && xCheck < xLen && yCheck >= 0 && yCheck < yLen)
                     {
@@ -190,7 +193,7 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
-            // If the middle cell is alive then minus 1 the current cell.
+            // If the middle cell is alive then subtract one to the current cell.
             if (universe[x, y])
             {
                 count--;
@@ -207,13 +210,15 @@ namespace GOL_DerrickDomena
             int count = 0;
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);
+
+
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
                     // Calculates the xCheck and yCheck for surrounding cells and adds count when current cell is alive.
-                    int xCheck = (x + yOffset + xLen) % xLen;
-                    int yCheck = (y + xOffset + yLen) % yLen;
+                    int xCheck = (x + xOffset + xLen) % xLen;
+                    int yCheck = (y + yOffset + yLen) % yLen;
 
                     if (universe[xCheck, yCheck] == true)
                     {
@@ -221,7 +226,8 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
-            // If the middle cell is alive, subtract 1
+
+            // If the middle cell is alive then subtract one to the current cell.
             if (universe[x, y])
             {
                 count--;
