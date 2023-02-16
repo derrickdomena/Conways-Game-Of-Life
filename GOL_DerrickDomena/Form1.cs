@@ -924,6 +924,8 @@ namespace GOL_DerrickDomena
                 // Reset the file pointer back to the beginning of the file.
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
+                int yPos = 0;
+
                 // Iterate through the file again, this time reading in the cells.
                 while (!reader.EndOfStream)
                 {
@@ -936,8 +938,7 @@ namespace GOL_DerrickDomena
                     {
                         continue;
                     }
-
-                    int yPos = 0;
+                    
                     // If the row is not a comment then 
                     // it is a row of cells and needs to be iterated through.
                     if (!row.Equals("!"))
@@ -958,14 +959,17 @@ namespace GOL_DerrickDomena
                                 universe[xPos, yPos] = false;
                             }
                         }
-                    }             
+                    }    
+                    
                     yPos++;
                 }
-                graphicsPanel1.Invalidate();
+
                 // Close the file.
                 reader.Close();
-            }
-            
+
+                //Invalidate the graphics panel
+                graphicsPanel1.Invalidate();
+            }           
         }
     }
 }
