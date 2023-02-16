@@ -1042,6 +1042,7 @@ namespace GOL_DerrickDomena
             universe = new bool[universeWidth, universeHeight];
             scratchPad = new bool[universeWidth, universeHeight];
 
+            // Call graphicsPanel1 Invalidate to re-paint the screen.
             graphicsPanel1.Invalidate();
         }
         #endregion
@@ -1073,6 +1074,7 @@ namespace GOL_DerrickDomena
             universe = new bool[universeWidth, universeHeight];
             scratchPad = new bool[universeWidth, universeHeight];
 
+            // Call graphicsPanel1 Invalidate to re-paint the screen.
             graphicsPanel1.Invalidate();
         }
         #endregion
