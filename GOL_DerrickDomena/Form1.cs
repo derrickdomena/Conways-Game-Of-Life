@@ -8,7 +8,7 @@ namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
     {
-        // Variable Definitions and Initializations.
+        // Variable Definitions and Initializations
         #region Variable Definitions and Initializations
 
         // Static values for universe width and height
@@ -376,15 +376,15 @@ namespace GOL_DerrickDomena
                     // Grid
                     // If statement that checks if viewGridClicked is true.
                     if (viewGridClicked)
-                    {
+                    {                       
                         // Outline the cell with a pen
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                         // Outlines the gridx10 
                         // Still needs work, when resizing the screen it draws a string even when gridx10 is not mod 10 = 0.
                         if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
-                        {                          
+                        {
                             e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width*10, cellRect.Height*10);
-                        }
+                        }                      
                     }          
                 }
             }
@@ -918,7 +918,7 @@ namespace GOL_DerrickDomena
         #endregion
 
         // Settings MenuStrip
-        // Includes Color - Back, Cell, Grid, Gridx10. Options, Reset, and Reload.
+        // Includes Color - Back, Cell, Grid, Gridx10. Options, Reset, and Reload
         #region Settings MenuStrip
 
         // Color - Back Color
@@ -1001,11 +1001,12 @@ namespace GOL_DerrickDomena
                 timer.Interval = optionsDialogBox.IntervalNum;
                 universeWidth = optionsDialogBox.UniverseWidth;
                 universeHeight = optionsDialogBox.UniverseHeight;
-            }
-            // Change the size of the universe and scratchPad
-            universe = new bool[universeWidth, universeHeight];
-            scratchPad = new bool[universeWidth, universeHeight];
 
+                // Change the size of the universe and scratchPad
+                universe = new bool[universeWidth, universeHeight];
+                scratchPad = new bool[universeWidth, universeHeight];
+            }
+           
             // Call graphicsPanel1 Invalidate to re-paint the screen.
             graphicsPanel1.Invalidate();
         }
@@ -1036,7 +1037,11 @@ namespace GOL_DerrickDomena
             universeWidth = Properties.Settings.Default.UniverseWidth;
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
-           
+
+            // Change the size of the universe and scratchPad
+            universe = new bool[universeWidth, universeHeight];
+            scratchPad = new bool[universeWidth, universeHeight];
+
             graphicsPanel1.Invalidate();
         }
         #endregion
@@ -1064,12 +1069,18 @@ namespace GOL_DerrickDomena
             // Universe Height
             universeHeight = Properties.Settings.Default.UniverseHeight;
 
+            // Change the size of the universe and scratchPad
+            universe = new bool[universeWidth, universeHeight];
+            scratchPad = new bool[universeWidth, universeHeight];
+
             graphicsPanel1.Invalidate();
         }
         #endregion
 
         #endregion
 
+        // Randomize MenuStrip
+        // Includes From Seed, From Current Seed, and From Time
         private void Randomize()
         {
             //if check which random is going to be run either 
