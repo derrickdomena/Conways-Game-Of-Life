@@ -49,6 +49,9 @@ namespace GOL_DerrickDomena
         // Keeps track of the generation that the user inputs for Run to generation.
         int targetGeneration = 0;
 
+        // Keeps track of the seed
+        int seedCount = 2001;
+
         // viewMode sets the view for HUD if its Finite or Torodial.
         string viewMode = "";
         #endregion
@@ -415,7 +418,10 @@ namespace GOL_DerrickDomena
             cellBrush.Dispose();
 
             // Update status strip TimeInterval
-            toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();         
+            toolStripStatusLabelTimeInterval.Text = "Interval = " + timer.Interval.ToString();
+
+            // Update status strip Seed
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
         }
         #endregion
 
@@ -1101,6 +1107,21 @@ namespace GOL_DerrickDomena
             // Invalidate
         }
 
-        
+        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FromSeedDialogBox fromSeedDialogBox = new FromSeedDialogBox();
+
+            // Gets the value from seedCount and saves it to FromSeedRandom.
+            fromSeedDialogBox.FromSeedRandom = seedCount;
+
+            // Checks if OK was clicked and sets the value for Seed.
+            if (DialogResult.OK == fromSeedDialogBox.ShowDialog())
+            {               
+                seedCount = fromSeedDialogBox.FromSeedRandom;
+            }
+
+            // Update status strip Seed
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+        }
     }
 }

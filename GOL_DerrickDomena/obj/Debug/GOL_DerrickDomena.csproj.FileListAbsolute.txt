@@ -11,3 +11,4 @@ C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\G
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.pdb
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.ToDialogBox.resources
 C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.OptionsDialogBox.resources
+C:\Users\derri\source\repos\COS1\GOL_DerrickDomena\GOL_DerrickDomena\obj\Debug\GOL_DerrickDomena.FromSeedDialogBox.resources
