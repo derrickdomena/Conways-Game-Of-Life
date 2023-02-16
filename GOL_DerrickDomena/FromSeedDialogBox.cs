@@ -18,6 +18,7 @@ namespace GOL_DerrickDomena
         }
 
         // Property, gets and sets the value for the From Seed feature.
+        // NumericUpDownFromSeed acceptable max num is set to 100,000,000.
         public int FromSeedRandom
         {
             get

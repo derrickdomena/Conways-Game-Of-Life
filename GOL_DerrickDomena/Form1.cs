@@ -1092,8 +1092,8 @@ namespace GOL_DerrickDomena
         private void Randomize()
         {
             //if check which random is going to be run either 
-            //Random randTime = new Random(); // Time
-            //Random randSeed = new Random(); // Seed
+            Random randTime = new Random(); // Time
+            Random randSeed = new Random(); // Seed
 
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -1107,6 +1107,7 @@ namespace GOL_DerrickDomena
             // Invalidate
         }
 
+        // From Seed
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FromSeedDialogBox fromSeedDialogBox = new FromSeedDialogBox();

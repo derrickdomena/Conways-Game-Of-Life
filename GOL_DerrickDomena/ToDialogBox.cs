@@ -20,6 +20,7 @@ namespace GOL_DerrickDomena
         // To Dialog Box
         #region Run to generation
         // Property, gets and sets the value for the Run to generation feature.
+        // NumericUpDownNumber acceptable max num is set to 100,000.
         public int Number
         {
             get 
