@@ -183,8 +183,8 @@ namespace GOL_DerrickDomena
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
-                    // If checks for surrounding cells and adds count when current cell is alive.
-                    if (xCheck >= 0 && xCheck < xLen && yCheck >= 0 && yCheck < yLen)
+                    // Calculates the xCheck and yCheck for surrounding cells and adds count if the cell is alive.
+                    if ((xCheck >= 0 && xCheck < xLen) && (yCheck >= 0 && yCheck < yLen))
                     {
                         if (universe[xCheck, yCheck] == true)
                         {
@@ -193,6 +193,7 @@ namespace GOL_DerrickDomena
                     }
                 }
             }
+            
             // If the middle cell is alive then subtract one to the current cell.
             if (universe[x, y])
             {
@@ -216,7 +217,8 @@ namespace GOL_DerrickDomena
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
-                    // Calculates the xCheck and yCheck for surrounding cells and adds count when current cell is alive.
+
+                    // Calculates the xCheck and yCheck for surrounding cells and adds count if the cell is alive.
                     int xCheck = (x + xOffset + xLen) % xLen;
                     int yCheck = (y + yOffset + yLen) % yLen;
 
