@@ -26,8 +26,7 @@ namespace GOL_DerrickDomena
 
         // The Timer class
         Timer timer = new Timer();
-
-        // Memberfield variables
+    
         // Keeps track of generation and alive counts.
         int generationCount = 0;
         int aliveCount = 0;
@@ -929,6 +928,97 @@ namespace GOL_DerrickDomena
 
         #endregion
 
+        // Randomize MenuStrip
+        // Includes From Seed, From Current Seed, and From Time
+        #region Randomize MenuStrip
+
+        // RandomizeSeed
+        // Initializes a random class variable and sets a random amount of cells either alive or dead in the universe.
+        private void RandomizeSeed()
+        {
+            // Initialize a random member.
+            Random randSeed = new Random(); // Time, Default
+
+            // If seedMethod is set to false, then either From Seed or From Current Seed method was clicked.
+            // Then we need to pass a seedCount parameter to randSeed.
+            if (seedMethod == false)
+            {
+                randSeed = new Random(seedCount); // Seed
+            }
+            else
+            {
+                // Updates the seedCount when seedMethod is true.
+                // If seedCount isn't updated then the status stip bar would not reflect the current seed.
+                // Max is based on the max from the numericUpDownFromSeed properties maximum.
+                seedCount = randSeed.Next(0, 100000000);
+            }
+
+            // Keep track of alive count.
+            aliveCount = 0;
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    int next = randSeed.Next(0, 2);
+
+                    // Turns on or off the cell in the universe.
+                    if (next == 0)
+                    {
+                        universe[x, y] = false;
+                    }
+                    else if (next == 1)
+                    {
+                        universe[x, y] = true;
+                        aliveCount++;
+                    }
+                }
+            }
+
+            // Update status strip Seed and alive.
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
+
+            // Re-paint the universe.
+            graphicsPanel1.Invalidate();
+        }
+
+        // From Seed
+        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            seedMethod = false;
+            FromSeedDialogBox fromSeedDialogBox = new FromSeedDialogBox();
+
+            // Gets the value from seedCount and saves it to FromSeedRandom.
+            fromSeedDialogBox.FromSeedRandom = seedCount;
+
+            // Checks if OK was clicked, sets the value for seed and RandomizeSeed is called.
+            if (DialogResult.OK == fromSeedDialogBox.ShowDialog())
+            {
+                seedCount = fromSeedDialogBox.FromSeedRandom;
+                RandomizeSeed();
+            }
+        }
+
+        // From Current Seed
+        private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            seedMethod = false;
+
+            // RandomizeSeed is only called here since we are returning a random universe based on the current seed.
+            RandomizeSeed();
+        }
+
+        // From Time
+        private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // seedMethod is updated 
+            seedMethod = true;
+
+            // RandomizeSeedTime is called here since we are returning a random universe based on time.
+            RandomizeSeed();
+        }
+        #endregion
+
         // Settings MenuStrip
         // Includes Color - Back, Cell, Grid, Gridx10. Options, Reset, and Reload
         #region Settings MenuStrip
@@ -1093,96 +1183,7 @@ namespace GOL_DerrickDomena
 
         #endregion
 
-        // Randomize MenuStrip
-        // Includes From Seed, From Current Seed, and From Time
-        #region Randomize MenuStrip
-
-        // RandomizeSeed
-        // Initializes a random class variable and sets a random amount of cells either alive or dead in the universe.
-        private void RandomizeSeed()
-        {
-            // Initialize a random member.
-            Random randSeed = new Random(); // Time, Default
-            
-            // If seedMethod is set to false, then either From Seed or From Current Seed method was clicked.
-            // Then we need to pass a seedCount parameter to randSeed.
-            if (seedMethod == false)
-            {
-                randSeed = new Random(seedCount); // Seed
-            }
-            else
-            {
-                // Updates the seedCount when seedMethod is true.
-                // If seedCount isn't updated then the status stip bar would not reflect the current seed.
-                // Max is based on the max from the numericUpDownFromSeed properties maximum.
-                seedCount = randSeed.Next(0, 100000000);
-            }
-            
-            // Keep track of alive count.
-            aliveCount = 0;
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    int next = randSeed.Next(0, 2);                 
-
-                    // Turns on or off the cell in the universe.
-                    if (next == 0)
-                    {
-                        universe[x, y] = false;
-                    }
-                    else if (next == 1)
-                    {
-                        universe[x, y] = true;
-                        aliveCount++;
-                    }
-                }
-            }
-
-            // Update status strip Seed and alive.
-            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
-            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
-
-            // Re-paint the universe.
-            graphicsPanel1.Invalidate();
-        }
-     
-        // From Seed
-        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            seedMethod = false;
-            FromSeedDialogBox fromSeedDialogBox = new FromSeedDialogBox();
-
-            // Gets the value from seedCount and saves it to FromSeedRandom.
-            fromSeedDialogBox.FromSeedRandom = seedCount;
-
-            // Checks if OK was clicked, sets the value for seed and RandomizeSeed is called.
-            if (DialogResult.OK == fromSeedDialogBox.ShowDialog())
-            {
-                seedCount = fromSeedDialogBox.FromSeedRandom;
-                RandomizeSeed();
-            } 
-        }
-
-        // From Current Seed
-        private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            seedMethod = false;
-
-            // RandomizeSeed is only called here since we are returning a random universe based on the current seed.
-            RandomizeSeed();
-        }
-
-        // From Time
-        private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // seedMethod is updated 
-            seedMethod = true;
-
-            // RandomizeSeedTime is called here since we are returning a random universe based on time.
-            RandomizeSeed();
-        }
-        #endregion
+        
 
     }
 }
