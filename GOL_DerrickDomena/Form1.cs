@@ -1096,6 +1096,9 @@ namespace GOL_DerrickDomena
         // Randomize MenuStrip
         // Includes From Seed, From Current Seed, and From Time
         #region Randomize MenuStrip
+
+        // RandomizeSeed
+        // Initializes a random class variable and sets a random amount of cells either alive or dead in the universe.
         private void RandomizeSeed()
         {
             // Initialize a random member.
