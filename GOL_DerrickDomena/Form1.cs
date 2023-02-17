@@ -1089,22 +1089,60 @@ namespace GOL_DerrickDomena
 
         // Randomize MenuStrip
         // Includes From Seed, From Current Seed, and From Time
-        private void Randomize()
+        private void RandomizeSeed()
         {
-            //if check which random is going to be run either 
-            Random randTime = new Random(); // Time
-            Random randSeed = new Random(); // Seed
+            // Initialize a random class member that takes in the seedCount parameter.           
+            Random randSeed = new Random(seedCount); // Seed
+           
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    // Int next returns a random int between 0 and 2.
+                    int next = randSeed.Next(0, 2);
+
+                    // Turns on or off the cell in the universe.
+                    if (next == 0)
+                    {
+                        universe[x, y] = false;
+                    }
+                    else if (next == 1)
+                    {
+                        universe[x, y] = true;                        
+                    }                 
+                }
+            }      
+            
+            // Re-paint the universe.
+            graphicsPanel1.Invalidate();
+        }
+
+        private void RandomizeSeedTime()
+        {
+            // Initialize a random class member that takes no-parameters.                                    
+            Random randSeedTime = new Random(); // Time
 
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-                    // return num = call next(,)
+                    // Int next returns a random int between 0 and 2.
+                    int next = randSeedTime.Next(0, 2);
 
-                    // if random num == 0 turn cell on otherwise turn off
+                    // Turns on or off the cell in the universe.
+                    if (next == 0)
+                    {
+                        universe[x, y] = false;                      
+                    }
+                    else if (next == 1)
+                    {
+                        universe[x, y] = true;                       
+                    }
                 }
             }
-            // Invalidate
+
+            // Re-paint the universe.
+            graphicsPanel1.Invalidate();
         }
 
         // From Seed
@@ -1115,14 +1153,39 @@ namespace GOL_DerrickDomena
             // Gets the value from seedCount and saves it to FromSeedRandom.
             fromSeedDialogBox.FromSeedRandom = seedCount;
 
-            // Checks if OK was clicked and sets the value for Seed.
+            // Checks if OK was clicked, sets the value for seed and RandomizeSeed is called.
             if (DialogResult.OK == fromSeedDialogBox.ShowDialog())
             {               
                 seedCount = fromSeedDialogBox.FromSeedRandom;
+                RandomizeSeed();
             }
 
             // Update status strip Seed
             toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();        
+        }
+
+        private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // RandomizeSeed is only called here since we are returning a random universe based on the current seed.
+            RandomizeSeed();
+
+            // Update status strip Seed
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();           
+        }
+
+        private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // RandomizeSeedTime is called here since we are returning a random universe based on time.
+            RandomizeSeedTime();
+
+            // Update status strip Seed
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();           
         }
     }
 }

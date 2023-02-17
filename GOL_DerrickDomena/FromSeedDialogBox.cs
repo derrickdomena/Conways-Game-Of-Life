@@ -31,9 +31,12 @@ namespace GOL_DerrickDomena
             }
         }
 
+        // When the Randomize Button is clicked it will save a random number between 0 and numericUpDownFromSeed maximum to its Value.
         private void buttonRandomize_Click(object sender, EventArgs e)
         {
+            Random random = new Random();
 
+            numericUpDownFromSeed.Value = random.Next(0, (int)numericUpDownFromSeed.Maximum);
         }
     }
 }
