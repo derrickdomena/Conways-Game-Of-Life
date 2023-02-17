@@ -1101,7 +1101,6 @@ namespace GOL_DerrickDomena
             // Initialize a random member.
             Random randSeed = new Random(); // Time, Default
             
-
             // If seedMethod is set to false, then either From Seed or From Current Seed method was clicked.
             // Then we need to pass a seedCount parameter to randSeed.
             if (seedMethod == false)
@@ -1137,6 +1136,10 @@ namespace GOL_DerrickDomena
                 }
             }
 
+            // Update status strip Seed and alive.
+            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
+            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
+
             // Re-paint the universe.
             graphicsPanel1.Invalidate();
         }
@@ -1155,11 +1158,7 @@ namespace GOL_DerrickDomena
             {
                 seedCount = fromSeedDialogBox.FromSeedRandom;
                 RandomizeSeed();
-            }
-
-            // Update status strip Seed and alive.
-            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
-            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
+            } 
         }
 
         // From Current Seed
@@ -1169,10 +1168,6 @@ namespace GOL_DerrickDomena
 
             // RandomizeSeed is only called here since we are returning a random universe based on the current seed.
             RandomizeSeed();
-
-            // Update status strip Seed and alive.
-            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
-            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
         }
 
         // From Time
@@ -1183,10 +1178,6 @@ namespace GOL_DerrickDomena
 
             // RandomizeSeedTime is called here since we are returning a random universe based on time.
             RandomizeSeed();
-
-            // Update status strip Seed and alive.
-            toolStripStatusLabelSeed.Text = "Seed: " + seedCount.ToString();
-            toolStripStatusLabelAlive.Text = "Alive = " + aliveCount.ToString();
         }
         #endregion
 
