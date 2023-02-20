@@ -7,7 +7,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 namespace GOL_DerrickDomena
 {
     public partial class Form1 : Form
-    {
+    {       
         // Variable Definitions and Initializations
         #region Variable Definitions and Initializations
 
@@ -318,7 +318,7 @@ namespace GOL_DerrickDomena
             int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
             // CELL HEIGHT = WINDOW HEIGHT / NUMBER OF CELLS IN Y
             int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);           
-
+          
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
             Pen gridx10Pen = new Pen(gridx10Color, 2);
@@ -332,14 +332,16 @@ namespace GOL_DerrickDomena
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
 
+            // A rectangle to represent each cell in pixels
+            Rectangle cellRect = Rectangle.Empty;
+
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-                    // A rectangle to represent each cell in pixels
-                    Rectangle cellRect = Rectangle.Empty;
+                    // A rectangle to represent each cell in pixels                    
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
@@ -384,18 +386,38 @@ namespace GOL_DerrickDomena
                     // Grid
                     // If statement that checks if viewGridClicked is true.
                     if (viewGridClicked)
-                    {                       
+                    {
                         // Outline the cell with a pen
-                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);                                              
+                    }
+                }
+            }
+
+            // Grid
+            // If statement that checks if viewGridClicked is true.
+            if (viewGridClicked)
+            {
+                // In its own nested for loop to prevent the lines being drawn by the first drawrectangle
+                
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        // A rectangle to represent each cell in pixels
+                        cellRect.X = x * cellWidth;
+                        cellRect.Y = y * cellHeight;
+                        cellRect.Width = cellWidth;
+                        cellRect.Height = cellHeight;
+
                         // Outlines the gridx10 
                         // Still needs work, when resizing the screen it draws a string even when gridx10 is not mod 10 = 0.
                         if (cellRect.X % 10 == 0 && cellRect.Y % 10 == 0)
                         {
-                            e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width*10, cellRect.Height*10);
-                        }                      
-                    }          
+                            e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 10, cellRect.Height * 10);
+                        }
+                    }
                 }
-            }
+            }            
             //HUD
             if (viewHUDClicked)
             {
@@ -1182,8 +1204,5 @@ namespace GOL_DerrickDomena
         #endregion
 
         #endregion
-
-        
-
     }
 }
