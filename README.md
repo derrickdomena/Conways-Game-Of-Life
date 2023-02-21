@@ -1,4 +1,4 @@
-# Conway-s-Game-Of-Life
+# Conways-Game-Of-Life
 
 Implementation of the below features can be found in the Form1.cs
 
